@@ -1,4 +1,4 @@
-import type { EnvironmentSpec } from "@twin/schema";
+import { ID_PATTERN, type EnvironmentSpec } from "@twin/schema";
 import type { AssetDefinition } from "@twin/schema";
 
 function formatCatalogueTable(catalogue: readonly AssetDefinition[]): string {
@@ -26,14 +26,14 @@ export function buildSystemPrompt(
   return `You are an AI that converts natural-language environment descriptions into EnvironmentSpec JSON objects for robot simulation.
 
 RULES:
-1. All measurements are in metres. Coordinate system: Y-up, right-handed. X = width, Y = height, Z = length.
+1. All measurements are in metres. Coordinate system: Y-up, right-handed. X = width, Y = height, Z = length. Rotations are Euler XYZ in radians (not degrees).
 2. Origin is at the environment centre on the ground plane.
 3. All object positions MUST be inside environment bounds:
    - X: [-width/2, +width/2]
    - Y: >= 0 (on or above the ground)
    - Z: [-length/2, +length/2]
 4. You MUST ONLY use object types from the ASSET CATALOGUE below. Any other type is invalid.
-5. Every object must have a unique id (e.g. "shelf_001", "shelf_002"). IDs must match [A-Za-z0-9_.-]{1,64}.
+5. Every object and waypoint must have a unique id (e.g. "shelf_001", "shelf_002"). IDs must match ${ID_PATTERN.source}: a letter or underscore, then letters, digits or underscores only (no "-" or ".").
 6. Static objects should not overlap each other.
 7. Scale values must all be between 0.1 and 10.
 8. Set schemaVersion to "1.0.0".

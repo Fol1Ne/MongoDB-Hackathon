@@ -23,9 +23,10 @@ export const TerrainTypeSchema = z.enum(["concrete", "asphalt", "grass", "gravel
 export const CollisionShapeSchema = z.enum(["box", "cylinder", "mesh"]);
 
 /** Ids become USD prim names in the compiler, so they must be identifiers: no '-', '.', or leading digit. */
+export const ID_PATTERN = /^[A-Za-z_][A-Za-z0-9_]{0,63}$/;
 const IdSchema = z
   .string()
-  .regex(/^[A-Za-z_][A-Za-z0-9_]{0,63}$/, "id must start with a letter or _ and contain only letters, digits and _ (max 64)")
+  .regex(ID_PATTERN, "id must start with a letter or _ and contain only letters, digits and _ (max 64)")
   .describe("Unique id, used as a USD prim name: a letter or _ followed by letters, digits or _ (max 64); no '-' or '.'");
 
 export const ObjectPhysicsSchema = z
