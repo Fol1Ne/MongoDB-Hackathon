@@ -1,0 +1,270 @@
+{
+  "schemaVersion": "1.0.0",
+  "environment": {
+    "name": "Outdoor yard with a barrier lane",
+    "type": "outdoor",
+    "dimensions": {
+      "width": 40,
+      "length": 40,
+      "height": 15
+    }
+  },
+  "terrain": {
+    "type": "gravel",
+    "properties": {
+      "friction": 0.9,
+      "restitution": 0.1
+    },
+    "heightmap": null
+  },
+  "objects": [
+    {
+      "id": "barrier_1",
+      "type": "barrier",
+      "position": [
+        -5,
+        0,
+        -10
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "barrier_2",
+      "type": "barrier",
+      "position": [
+        -5,
+        0,
+        -6
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "barrier_3",
+      "type": "barrier",
+      "position": [
+        5,
+        0,
+        -10
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "barrier_4",
+      "type": "barrier",
+      "position": [
+        5,
+        0,
+        -6
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "crate_1",
+      "type": "crate",
+      "position": [
+        0,
+        0,
+        5
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": false,
+        "mass": 15
+      }
+    },
+    {
+      "id": "crate_2",
+      "type": "crate",
+      "position": [
+        2,
+        0,
+        8
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": false,
+        "mass": 15
+      }
+    },
+    {
+      "id": "crate_3",
+      "type": "crate",
+      "position": [
+        -3,
+        0,
+        12
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": false,
+        "mass": 15
+      }
+    },
+    {
+      "id": "pallet_1",
+      "type": "pallet",
+      "position": [
+        10,
+        0,
+        10
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "charger_1",
+      "type": "charging_station",
+      "position": [
+        15,
+        0,
+        -15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "forklift_1",
+      "type": "forklift",
+      "position": [
+        -12,
+        0,
+        10
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": false,
+        "mass": 3000
+      }
+    }
+  ],
+  "lighting": {
+    "preset": "daylight",
+    "intensity": 1.2
+  },
+  "navigation": {
+    "waypoints": [
+      {
+        "id": "wp_gate",
+        "position": [
+          0,
+          0,
+          -18
+        ]
+      },
+      {
+        "id": "wp_lane",
+        "position": [
+          0,
+          0,
+          -8
+        ]
+      },
+      {
+        "id": "wp_yard",
+        "position": [
+          0,
+          0,
+          10
+        ]
+      }
+    ]
+  },
+  "robotics": {
+    "simulation_enabled": true
+  },
+  "provenance": {
+    "source": "manual",
+    "prompt": null,
+    "model": null,
+    "generatedAt": "2026-10-03T12:00:00Z",
+    "confidence": null
+  }
+}

@@ -7,6 +7,14 @@ npm run db:init        # creates collections + $jsonSchema validators + indexes 
 npm run dev            # API on :3001 (also runs ensureSchema on boot)
 ```
 
+**Demo data and smoke test (no Docker needed):**
+```bash
+set -a; source .env; set +a   # or export MONGODB_URI / MONGODB_DB yourself
+npm run db:seed               # creates the 4 scenes in apps/api/demo-scenes/ (idempotent)
+npm run smoke                 # create → edit → 400 → 409 → revert → history → $jsonSchema 121 (cleans up after itself)
+```
+On Atlas M0, `smoke` also proves that multi-document transactions work on the free tier.
+
 **Local:** `docker compose -f infra/mongo/docker-compose.yml up -d`, then use
 `MONGODB_URI='mongodb://localhost:27017/?replicaSet=rs0'`.
 

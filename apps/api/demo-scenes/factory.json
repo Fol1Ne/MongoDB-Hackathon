@@ -1,0 +1,239 @@
+{
+  "schemaVersion": "1.0.0",
+  "environment": {
+    "name": "Factory cell with conveyor line",
+    "type": "factory",
+    "dimensions": {
+      "width": 20,
+      "length": 20,
+      "height": 8
+    }
+  },
+  "terrain": {
+    "type": "concrete",
+    "properties": {
+      "friction": 0.7,
+      "restitution": 0.05
+    },
+    "heightmap": null
+  },
+  "objects": [
+    {
+      "id": "conveyor_1",
+      "type": "conveyor",
+      "position": [
+        -1.6,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "conveyor_2",
+      "type": "conveyor",
+      "position": [
+        1.6,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "workbench_1",
+      "type": "workbench",
+      "position": [
+        -5,
+        0,
+        4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "workbench_2",
+      "type": "workbench",
+      "position": [
+        5,
+        0,
+        4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "box_1",
+      "type": "box",
+      "position": [
+        5,
+        0.9,
+        4
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": false,
+        "mass": 2
+      }
+    },
+    {
+      "id": "rack_1",
+      "type": "storage_rack",
+      "position": [
+        0,
+        0,
+        -7
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "barrier_1",
+      "type": "barrier",
+      "position": [
+        -8,
+        0,
+        -6
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "barrier_2",
+      "type": "barrier",
+      "position": [
+        4,
+        0,
+        -3
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "charger_1",
+      "type": "charging_station",
+      "position": [
+        8.5,
+        0,
+        8.5
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "lighting": {
+    "preset": "factory_bright",
+    "intensity": 1.1
+  },
+  "navigation": {
+    "waypoints": [
+      {
+        "id": "wp_start",
+        "position": [
+          -7,
+          0,
+          8
+        ]
+      },
+      {
+        "id": "wp_line",
+        "position": [
+          0,
+          0,
+          -3.5
+        ]
+      },
+      {
+        "id": "wp_charge",
+        "position": [
+          8.5,
+          0,
+          7.5
+        ]
+      }
+    ]
+  },
+  "robotics": {
+    "simulation_enabled": true
+  },
+  "provenance": {
+    "source": "manual",
+    "prompt": null,
+    "model": null,
+    "generatedAt": "2026-10-03T12:00:00Z",
+    "confidence": null
+  }
+}
