@@ -1,12 +1,12 @@
 export const CATEGORY_HEX = {
-  vehicle: "#ed7940",
-  robotics: "#4c80cd",
-  safety: "#c13c3b",
-  logistics: "#eccb61",
-  factory: "#32a5a2",
-  furniture: "#d1ade8",
-  storage: "#bea692",
-  structure: "#dbd7cf",
+  storage: "#5ac8fa",
+  logistics: "#ffd166",
+  factory: "#6ee7a8",
+  furniture: "#a5b5d2",
+  robotics: "#b794f6",
+  vehicle: "#ffa94d",
+  safety: "#ff7b9c",
+  structure: "#70819f",
 } as const;
 
 export type Category = keyof typeof CATEGORY_HEX;
@@ -25,25 +25,21 @@ export const CATEGORY_LABEL: Record<Category, string> = {
 };
 
 export const COLORS = {
-  page: "#ece6d9",
-  stage: "#f5f1e8",
-  floor: "#f0eadd",
-  floorMinor: "#e2d9c4",
-  floorMajor: "#cfc3a6",
-  slab: "#e7dfcd",
-  ink: "#2a251d",
-  muted: "#8c8372",
-  accent: "#d8623a",
-  accentFill: "#c4512b",
-  ok: "#3f8f6b",
-  warn: "#b9791a",
-  bad: "#c13c3b",
-  lowConfidence: "#d9a13a",
-  blueprintInk: "#1f4e8c",
-  blueprintPaper: "#ffffff",
-  gizmoX: "#d8623a",
-  gizmoY: "#3f8f6b",
-  gizmoZ: "#4a6fd0",
+  stage: "#0a1020",
+  floor: "#0d1932",
+  floorOutside: "#070c18",
+  gridMinor: "#21406c",
+  gridMajor: "#3f7fc0",
+  border: "#8ccfff",
+  route: "#ffd166",
+  ink: "#d6e4ff",
+  muted: "#7388b0",
+  accent: "#5ac8fa",
+  warn: "#ffc857",
+  bad: "#ff6b81",
+  lightSky: "#d6e4ff",
+  lightGround: "#1b2b4b",
+  lightFill: "#8ccfff",
 } as const;
 
 export const MOTION = {

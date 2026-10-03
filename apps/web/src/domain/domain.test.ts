@@ -96,7 +96,7 @@ describe("schedule", () => {
 
 describe("plan drawing", () => {
   it("draws every object at a standard scale on an A4 landscape sheet", () => {
-    const r = buildPlanSvg(v3, { style: "blueprint", mode: "sheet", widthMm: 277, heightMm: 150 });
+    const r = buildPlanSvg(v3, { mode: "sheet", widthMm: 277, heightMm: 150 });
     expect(r.objectCount).toBe(219);
     expect(r.svg.match(/class="obj"/g)).toHaveLength(219);
     expect(r.rotated).toBe(true);
@@ -107,7 +107,7 @@ describe("plan drawing", () => {
   });
 
   it("dashes low-confidence objects from a photo scan", () => {
-    const r = buildPlanSvg(photoSpec, { style: "colour", mode: "thumbnail", widthMm: 100, heightMm: 70, confidence: photo.confidence });
+    const r = buildPlanSvg(photoSpec, { mode: "thumbnail", widthMm: 100, heightMm: 70, confidence: photo.confidence });
     const low = Object.values(photo.confidence).filter((c) => c < 0.5).length;
     expect(r.svg.match(/stroke-dasharray="0.6 0.4"/g)).toHaveLength(low);
     expect(r.svg).not.toContain("SCALE");

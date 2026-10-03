@@ -1,34 +1,17 @@
 const CATEGORIES = {
-  vehicle:   { L: 0.70, C: 0.160, h: 45,  note: "forklift, the object robots must avoid" },
-  robotics:  { L: 0.60, C: 0.130, h: 258, note: "charging_station" },
-  safety:    { L: 0.55, C: 0.170, h: 25,  note: "barrier" },
-  logistics: { L: 0.85, C: 0.130, h: 92,  note: "pallet, crate, box, loading_dock" },
-  factory:   { L: 0.66, C: 0.100, h: 192, note: "conveyor" },
-  furniture: { L: 0.80, C: 0.090, h: 312, note: "workbench, table, chair" },
-  storage:   { L: 0.74, C: 0.040, h: 62,  note: "industrial_shelf, storage_rack (the dominant mass, kept quiet)" },
-  structure: { L: 0.88, C: 0.012, h: 85,  note: "warehouse_column, wall" },
+  storage: "#5ac8fa",
+  logistics: "#ffd166",
+  factory: "#6ee7a8",
+  furniture: "#a5b5d2",
+  robotics: "#b794f6",
+  vehicle: "#ffa94d",
+  safety: "#ff7b9c",
+  structure: "#70819f",
 };
-const UI = { floor: "#f0eadd", stage: "#f5f1e8", ink: "#2a251d", accent: "#d8623a", accentFill: "#c4512b" };
+const UI = { stage: "#0a1020", panel: "#0b1326", floor: "#0d1932", ink: "#d6e4ff", muted: "#7388b0", accent: "#5ac8fa", accentInk: "#04121f" };
 
 const clamp01 = (x) => Math.min(1, Math.max(0, x));
 const toLinear = (c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
-const toSrgb = (c) => (c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055);
-
-function oklchToLinear({ L, C, h }) {
-  const a = C * Math.cos((h * Math.PI) / 180);
-  const b = C * Math.sin((h * Math.PI) / 180);
-  const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
-  const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
-  const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
-  const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
-  return [
-    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
-    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
-    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s,
-  ];
-}
-const inGamut = (rgb) => rgb.every((v) => v >= -1e-4 && v <= 1 + 1e-4);
-const hex = (lin) => "#" + lin.map((v) => Math.round(clamp01(toSrgb(clamp01(v))) * 255).toString(16).padStart(2, "0")).join("");
 function linearFromHex(h) {
   const n = parseInt(h.slice(1), 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => toLinear(v / 255));
@@ -50,16 +33,11 @@ const SIM = {
 };
 const simulate = (rgb, m) => m.map((row) => clamp01(row[0] * rgb[0] + row[1] * rgb[1] + row[2] * rgb[2]));
 
-const entries = Object.entries(CATEGORIES).map(([name, spec]) => {
-  const lin = oklchToLinear(spec);
-  return { name, spec, lin, hex: hex(lin), gamut: inGamut(lin) };
-});
+const entries = Object.entries(CATEGORIES).map(([name, hex]) => ({ name, hex, lin: linearFromHex(hex) }));
 
 const MIN_DE = { normal: 0.085, deuteranopia: 0.05, protanopia: 0.05, tritanopia: 0.05 };
 let failures = 0;
 const report = [];
-
-for (const e of entries) if (!e.gamut) { failures++; report.push(`FAIL ${e.name} is outside sRGB; lower chroma`); }
 
 for (const [mode, matrix] of [["normal", null], ...Object.entries(SIM)]) {
   let worst = { d: Infinity, pair: "" };
@@ -75,23 +53,24 @@ for (const [mode, matrix] of [["normal", null], ...Object.entries(SIM)]) {
 }
 
 const floor = linearFromHex(UI.floor);
-const textOnStage = contrast(linearFromHex(UI.ink), linearFromHex(UI.stage));
-const labelOnFill = contrast(linearFromHex(UI.accentFill), [1, 1, 1]);
-const accentOnStage = contrast(linearFromHex(UI.accent), linearFromHex(UI.stage));
+const ratio = (fg, bg) => contrast(linearFromHex(fg), linearFromHex(bg));
+const textOnStage = ratio(UI.ink, UI.stage);
+const inkOnAccent = ratio(UI.accentInk, UI.accent);
+const accentOnStage = ratio(UI.accent, UI.stage);
+const mutedOnPanel = ratio(UI.muted, UI.panel);
 const checks = [
-  [textOnStage >= 4.5, `ink on stage ${textOnStage.toFixed(2)}:1 (text needs 4.5)`],
-  [labelOnFill >= 4.5, `white 13px label on accentFill ${labelOnFill.toFixed(2)}:1 (text needs 4.5)`],
+  [textOnStage >= 4.5, `text on stage ${textOnStage.toFixed(2)}:1 (text needs 4.5)`],
+  [inkOnAccent >= 4.5, `accent-ink on accent ${inkOnAccent.toFixed(2)}:1 (text needs 4.5)`],
   [accentOnStage >= 3, `accent graphics on stage ${accentOnStage.toFixed(2)}:1 (graphics need 3)`],
+  [mutedOnPanel >= 4.5, `muted on panel ${mutedOnPanel.toFixed(2)}:1 (text needs 4.5)`],
+  ...entries.map((e) => { const c = contrast(e.lin, floor); return [c >= 3, `${e.name.padEnd(10)} ${e.hex} on floor ${c.toFixed(2)}:1 (graphics need 3)`]; }),
 ];
 for (const [ok, msg] of checks) { if (!ok) failures++; report.push(`${ok ? "pass" : "FAIL"} ${msg}`); }
 
-const JSON_ONLY = process.argv.includes("--json");
-if (JSON_ONLY) {
+if (process.argv.includes("--json")) {
   console.log(JSON.stringify(Object.fromEntries(entries.map((e) => [e.name, e.hex]))));
   process.exit(failures ? 1 : 0);
 }
-console.log("category   hex      L     C      h");
-for (const e of entries) console.log(`${e.name.padEnd(10)} ${e.hex}  ${e.spec.L.toFixed(2)}  ${e.spec.C.toFixed(3)}  ${String(e.spec.h).padStart(3)}   floor contrast ${contrast(e.lin, floor).toFixed(2)}:1   ${e.spec.note}`);
 console.log(report.join("\n"));
 console.log(`\n${failures === 0 ? "palette ok" : failures + " problem(s)"}`);
 process.exit(failures ? 1 : 0);

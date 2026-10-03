@@ -264,7 +264,7 @@ function Recent() {
       if (cancelled) return;
       setItems(heads.flatMap((h) => (h.ok ? [{
         env: h.data.environment,
-        svg: buildPlanSvg(h.data.version.spec, { style: "colour", mode: "thumbnail", widthMm: 112, heightMm: 78, confidence: h.data.confidence }).svg,
+        svg: buildPlanSvg(h.data.version.spec, { mode: "thumbnail", widthMm: 112, heightMm: 78, confidence: h.data.confidence }).svg,
         objects: h.data.version.spec.objects.length,
         photo: h.data.version.spec.provenance.source === "image",
       }] : [])));

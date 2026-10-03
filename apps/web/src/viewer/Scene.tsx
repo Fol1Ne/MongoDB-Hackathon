@@ -15,7 +15,7 @@ const ISO_DIR = new THREE.Vector3(-0.62, 0.62, 0.62).normalize();
 const TOP_DIR = new THREE.Vector3(0, 1, 0.02).normalize();
 const WHITE = new THREE.Color(1, 1, 1);
 const RED = new THREE.Color(COLORS.bad);
-const AMBER = new THREE.Color(COLORS.lowConfidence);
+const AMBER = new THREE.Color(COLORS.warn);
 const now = () => performance.now() / 1000;
 
 export function Scene({ frame, pins }: { frame: RefObject<HTMLDivElement | null>; pins: RefObject<HTMLDivElement | null> }) {
@@ -57,22 +57,26 @@ function Lights() {
   }, []);
   return (
     <>
-      <hemisphereLight args={[0xfffaf0, 0xd9cdb5, 0.9]} />
-      <directionalLight ref={sun} position={[-55, 80, 40]} intensity={2.6} color={0xfff0d8} castShadow shadow-mapSize={[4096, 4096]} shadow-bias={-0.0003} shadow-normalBias={0.05} shadow-radius={4} />
-      <directionalLight position={[60, 40, -50]} intensity={0.55} color={0xdfe8ff} />
+      <hemisphereLight args={[COLORS.lightSky, COLORS.lightGround, 0.9]} />
+      <directionalLight ref={sun} position={[-55, 80, 40]} intensity={2.4} castShadow shadow-mapSize={[4096, 4096]} shadow-bias={-0.0003} shadow-normalBias={0.05} shadow-radius={4} />
+      <directionalLight position={[60, 40, -50]} intensity={0.55} color={COLORS.lightFill} />
     </>
   );
 }
 
 const FLOOR_VS = "varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }";
 const FLOOR_FS = `varying vec3 vW;
-uniform vec3 uIn, uMinor, uMajor;
+uniform vec3 uIn, uOut, uMinor, uMajor;
+uniform vec2 uHalf, uFade;
 float grid(vec2 p, float s){ vec2 q = p / s; vec2 d = fwidth(q); vec2 g = abs(fract(q - .5) - .5) / max(d, vec2(1e-4)); float l = 1. - min(min(g.x, g.y), 1.); return l * (1. - smoothstep(.25, .6, max(d.x, d.y))); }
 void main(){
-  vec3 c = uIn;
-  c = mix(c, uMinor, grid(vW.xz, 1.) * .55);
-  c = mix(c, uMajor, grid(vW.xz, 10.) * .9);
-  gl_FragColor = vec4(c, 1.);
+  vec2 a = abs(vW.xz) - uHalf;
+  float outside = step(0., max(a.x, a.y));
+  float lines = mix(1., .3, outside);
+  vec3 c = mix(uIn, uOut, outside);
+  c = mix(c, uMinor, grid(vW.xz, 1.) * .6 * lines);
+  c = mix(c, uMajor, grid(vW.xz, 10.) * .95 * lines);
+  gl_FragColor = vec4(c, 1. - smoothstep(uFade.x, uFade.y, length(vW.xz)));
   #include <tonemapping_fragment>
   #include <colorspace_fragment>
 }`;
@@ -81,35 +85,46 @@ function Floor() {
   const dims = useStudio((s) => s.spec!.environment.dimensions);
   const waypoints = useStudio((s) => s.spec!.navigation?.waypoints);
   const { width: W, length: L } = dims;
-  const material = useMemo(
-    () => new THREE.ShaderMaterial({ vertexShader: FLOOR_VS, fragmentShader: FLOOR_FS, uniforms: { uIn: { value: new THREE.Color(COLORS.floor) }, uMinor: { value: new THREE.Color(COLORS.floorMinor) }, uMajor: { value: new THREE.Color(COLORS.floorMajor) } } }),
+  const reach = Math.hypot(W, L);
+  const fadeStart = Math.max(120, reach * 1.25);
+  const fadeEnd = Math.max(330, reach * 3.5);
+  const uniforms = useMemo(
+    () => ({
+      uIn: { value: new THREE.Color(COLORS.floor) },
+      uOut: { value: new THREE.Color(COLORS.floorOutside) },
+      uMinor: { value: new THREE.Color(COLORS.gridMinor) },
+      uMajor: { value: new THREE.Color(COLORS.gridMajor) },
+      uHalf: { value: new THREE.Vector2() },
+      uFade: { value: new THREE.Vector2() },
+    }),
     [],
   );
+  useLayoutEffect(() => {
+    uniforms.uHalf.value.set(W / 2, L / 2);
+    uniforms.uFade.value.set(fadeStart, fadeEnd);
+  }, [uniforms, W, L, fadeStart, fadeEnd]);
+  const border = useMemo(() => new THREE.BufferGeometry().setFromPoints([[-W / 2, -L / 2], [W / 2, -L / 2], [W / 2, L / 2], [-W / 2, L / 2]].map(([x, z]) => new THREE.Vector3(x, 0, z))), [W, L]);
   const onMove = (e: ThreeEvent<PointerEvent>) => overlay.setCoords(e.point.x, e.point.z);
   const onClick = (e: ThreeEvent<MouseEvent>) => { if (e.delta < 4) useStudio.getState().select(null); };
   const points = useMemo(() => (waypoints ?? []).map((w) => new THREE.Vector3(w.position[0], 0.05, w.position[2])), [waypoints]);
   return (
     <group>
-      <mesh rotation-x={-Math.PI / 2} position-y={-0.01} material={material} onPointerMove={onMove} onPointerLeave={() => overlay.setCoords(null, null)} onClick={onClick}>
-        <planeGeometry args={[W, L]} />
+      <mesh rotation-x={-Math.PI / 2} position-y={-0.01} renderOrder={-10} onPointerMove={onMove} onPointerLeave={() => overlay.setCoords(null, null)} onClick={onClick}>
+        <planeGeometry args={[fadeEnd * 2, fadeEnd * 2]} />
+        <shaderMaterial transparent vertexShader={FLOOR_VS} fragmentShader={FLOOR_FS} uniforms={uniforms} />
       </mesh>
       <mesh rotation-x={-Math.PI / 2} position-y={0.004} receiveShadow raycast={() => null}>
         <planeGeometry args={[W, L]} />
         <shadowMaterial opacity={0.24} polygonOffset polygonOffsetFactor={-2} polygonOffsetUnits={-2} />
       </mesh>
-      <mesh position-y={-0.86} castShadow receiveShadow raycast={() => null}>
-        <boxGeometry args={[W + 2.6, 1.6, L + 2.6]} />
-        <meshStandardMaterial color={COLORS.slab} roughness={0.95} />
-      </mesh>
-      <mesh rotation-x={-Math.PI / 2} position-y={-1.7} receiveShadow raycast={() => null}>
-        <planeGeometry args={[600, 600]} />
-        <shadowMaterial opacity={0.16} />
-      </mesh>
-      {points.length > 1 ? <Line points={points} color={COLORS.accent} lineWidth={1.4} dashed dashSize={0.7} gapSize={0.5} raycast={() => null} /> : null}
+      <lineLoop geometry={border} position-y={0.02} raycast={() => null}>
+        <lineBasicMaterial color={COLORS.border} />
+      </lineLoop>
+      {points.length > 1 ? <Line points={points} color={COLORS.route} lineWidth={1.4} dashed dashSize={0.7} gapSize={0.5} raycast={() => null} /> : null}
       {points.map((p, i) => (
         <mesh key={i} position={p} raycast={() => null}>
           <cylinderGeometry args={[0.7, 0.7, 0.08, 28]} />
-          <meshBasicMaterial color={COLORS.accent} />
+          <meshBasicMaterial color={COLORS.route} />
         </mesh>
       ))}
     </group>
@@ -318,7 +333,7 @@ function ConfidenceRings() {
   return (
     <>
       {rings.map((r) => (
-        <Line key={r.id} points={r.pts} color={COLORS.lowConfidence} lineWidth={1.6} dashed dashSize={0.35} gapSize={0.25} raycast={() => null} />
+        <Line key={r.id} points={r.pts} color={COLORS.warn} lineWidth={1.6} dashed dashSize={0.35} gapSize={0.25} raycast={() => null} />
       ))}
     </>
   );
