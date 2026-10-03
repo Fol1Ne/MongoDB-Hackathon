@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { ObjectId } from "mongodb";
+import { MongoServerError, ObjectId } from "mongodb";
 import { buildSimilarPipeline } from "../src/similar";
+import { isSearchUnavailable } from "../src/repository";
 import { startTestApp } from "./helpers";
 
 describe("buildSimilarPipeline", () => {
@@ -10,17 +11,46 @@ describe("buildSimilarPipeline", () => {
     expect(first).toEqual({
       $vectorSearch: {
         index: "env_summary_autoembed", path: "summaryText", query: { text: "warehouse with a dock" },
-        numCandidates: 100, limit: 15, filter: { "spec.environment.type": "warehouse", environmentId: { $ne: id } },
+        numCandidates: 200, limit: 200, filter: { "spec.environment.type": "warehouse", environmentId: { $ne: id } },
       },
     });
   });
 
-  it("keeps the best version per environment and caps the results", () => {
+  it("keeps only current head versions, so old versions can't crowd out other environments", () => {
     const pipeline = buildSimilarPipeline({ text: "x", limit: 2 });
     expect(pipeline.map((stage) => Object.keys(stage)[0]))
-      .toEqual(["$vectorSearch", "$project", "$sort", "$group", "$replaceWith", "$sort", "$limit"]);
+      .toEqual(["$vectorSearch", "$addFields", "$lookup", "$match", "$project", "$sort", "$limit"]);
+    expect(pipeline[1]).toEqual({ $addFields: { score: { $meta: "vectorSearchScore" } } });
+    expect(pipeline[2]).toMatchObject({ $lookup: { from: "environments", localField: "_id", foreignField: "headVersionId" } });
     expect(pipeline[0]?.$vectorSearch.filter).toBeUndefined();
     expect(pipeline.at(-1)).toEqual({ $limit: 2 });
+  });
+
+  it("scales candidates with the requested limit", () => {
+    expect(buildSimilarPipeline({ text: "x", limit: 20 })[0]?.$vectorSearch).toMatchObject({ numCandidates: 800, limit: 800 });
+  });
+});
+
+describe("isSearchUnavailable", () => {
+  const err = (fields: object) => new MongoServerError(fields as any);
+
+  it.each([
+    ["$vectorSearch outside Atlas", { errmsg: "$vectorSearch is only allowed on MongoDB Atlas", code: 6047401 }],
+    ["search not enabled", { errmsg: "Using $search requires Atlas", code: 31082, codeName: "SearchNotEnabled" }],
+    ["the M0 embedding rate limit", { errmsg: "PlanExecutor error :: caused by :: Embedding provider rate limit exceeded, retry later", code: 8 }],
+  ])("treats %s as unavailable (503)", (_name, fields) => {
+    expect(isSearchUnavailable(err(fields))).toBe(true);
+  });
+
+  it.each([
+    ["a malformed pipeline", { errmsg: "Unrecognized pipeline stage name: '$vectorSerch'", code: 40324 }],
+    ["a bad value", { errmsg: "limit must be positive", code: 2, codeName: "BadValue" }],
+  ])("lets %s through as a real error (500)", (_name, fields) => {
+    expect(isSearchUnavailable(err(fields))).toBe(false);
+  });
+
+  it("ignores non-server errors", () => {
+    expect(isSearchUnavailable(new Error("boom"))).toBe(false);
   });
 });
 
