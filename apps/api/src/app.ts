@@ -6,6 +6,7 @@ import { validateAndParse } from "@twin/validator";
 import type { EnvironmentSpec } from "@twin/schema";
 import { AppError, badRequest, conflict, validationFailed } from "./errors";
 import { EnvironmentRepository, type EnvironmentDoc, type VersionDoc } from "./repository";
+import { registerGenerateRoutes } from "./generate";
 
 const oid = (v: string, what = "id") => {
   if (!ObjectId.isValid(v) || String(new ObjectId(v)) !== v.toLowerCase()) throw badRequest(`Invalid ${what}`);
@@ -69,6 +70,9 @@ export function buildApp(deps: { client: MongoClient; db: Db }): FastifyInstance
 
   app.register(async (api) => {
     api.get("/assets/catalogue", async () => ({ assets: ASSET_CATALOGUE }));
+
+    // LLM generation endpoint (Person 1)
+    await registerGenerateRoutes(api, repo);
 
     // Stateless validation for live editor feedback / LLM repair loop. Writes nothing.
     api.post("/environments/validate", async (req) => {

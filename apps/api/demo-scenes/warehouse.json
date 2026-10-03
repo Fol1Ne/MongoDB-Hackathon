@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0.0",
+  "environment": {
+    "name": "Warehouse Alpha",
+    "type": "warehouse",
+    "dimensions": { "width": 50, "length": 80, "height": 12 }
+  },
+  "terrain": {
+    "type": "concrete",
+    "properties": { "friction": 0.8, "restitution": 0.05 },
+    "heightmap": null
+  },
+  "objects": [
+    { "id": "shelf_001", "type": "industrial_shelf", "position": [-15, 0, -30], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["storage"] },
+    { "id": "shelf_002", "type": "industrial_shelf", "position": [-15, 0, -15], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["storage"] },
+    { "id": "shelf_003", "type": "industrial_shelf", "position": [-15, 0, 0],   "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["storage"] },
+    { "id": "shelf_004", "type": "industrial_shelf", "position": [-15, 0, 15],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["storage"] },
+    { "id": "shelf_005", "type": "industrial_shelf", "position": [-15, 0, 30],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["storage"] },
+    { "id": "shelf_006", "type": "industrial_shelf", "position": [15, 0, -30],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["storage"] },
+    { "id": "shelf_007", "type": "industrial_shelf", "position": [15, 0, -15],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["storage"] },
+    { "id": "shelf_008", "type": "industrial_shelf", "position": [15, 0, 0],    "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["storage"] },
+    { "id": "pallet_001", "type": "pallet",          "position": [-20, 0, -30], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": 20 },   "tags": ["cargo"] },
+    { "id": "pallet_002", "type": "pallet",          "position": [-20, 0, 30],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": 20 },   "tags": ["cargo"] },
+    { "id": "dock_001",   "type": "loading_dock",    "position": [20, 0, 0],    "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["logistics"] },
+    { "id": "charge_001", "type": "charging_station","position": [0, 0, -35],   "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["robot"] }
+  ],
+  "lighting": { "preset": "warehouse_overhead", "intensity": 1.0 },
+  "navigation": {
+    "waypoints": [
+      { "id": "wp_start", "position": [0, 0, 0] },
+      { "id": "wp_dock",  "position": [18, 0, 0] },
+      { "id": "wp_charge","position": [0, 0, -33] }
+    ]
+  },
+  "robotics": { "simulation_enabled": true },
+  "provenance": {
+    "source": "text",
+    "prompt": "A 50 by 80 metre warehouse with six shelf aisles and a loading dock",
+    "model": "demo",
+    "generatedAt": "2026-10-03T00:00:00Z",
+    "confidence": null
+  }
+}

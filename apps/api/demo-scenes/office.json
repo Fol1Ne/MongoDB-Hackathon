@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0.0",
+  "environment": {
+    "name": "Office Navigation Grid",
+    "type": "office",
+    "dimensions": { "width": 30, "length": 40, "height": 4 }
+  },
+  "terrain": {
+    "type": "tile",
+    "properties": { "friction": 0.6, "restitution": 0.01 },
+    "heightmap": null
+  },
+  "objects": [
+    { "id": "desk_001",    "type": "table",  "position": [-10, 0, -15], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_002",    "type": "table",  "position": [-10, 0, -10], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_003",    "type": "table",  "position": [-10, 0, -5],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_004",    "type": "table",  "position": [5, 0, -15],   "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_005",    "type": "table",  "position": [5, 0, -10],   "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_006",    "type": "table",  "position": [5, 0, -5],    "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "chair_001",   "type": "chair",  "position": [-8, 0, -15],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": false, "mass": 8 },   "tags": ["office"] },
+    { "id": "chair_002",   "type": "chair",  "position": [-8, 0, -10],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": false, "mass": 8 },   "tags": ["office"] },
+    { "id": "chair_003",   "type": "chair",  "position": [-8, 0, -5],   "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": false, "mass": 8 },   "tags": ["office"] },
+    { "id": "barrier_001", "type": "barrier",      "position": [0, 0, 5],     "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["safety"] },
+    { "id": "barrier_002", "type": "barrier",      "position": [0, 0, 10],    "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["safety"] },
+    { "id": "charge_001",  "type": "charging_station", "position": [12, 0, 18], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["robot"] }
+  ],
+  "lighting": { "preset": "office_ambient", "intensity": 0.9 },
+  "navigation": {
+    "waypoints": [
+      { "id": "wp_entrance", "position": [0, 0, -18] },
+      { "id": "wp_aisle_a",  "position": [-5, 0, -10] },
+      { "id": "wp_aisle_b",  "position": [0, 0, -10] },
+      { "id": "wp_charge",   "position": [12, 0, 17] }
+    ]
+  },
+  "robotics": { "simulation_enabled": true },
+  "provenance": {
+    "source": "text",
+    "prompt": "An office environment with desks, chairs, and navigation barriers for an AMR delivery robot",
+    "model": "demo",
+    "generatedAt": "2026-10-03T00:00:00Z",
+    "confidence": null
+  }
+}
