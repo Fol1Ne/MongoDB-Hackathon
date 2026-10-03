@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { zodToGeminiJsonSchema, type JsonSchema } from "./jsonSchema";
+
+export { zodToGeminiJsonSchema, type JsonSchema } from "./jsonSchema";
 
 export const CURRENT_SCHEMA_VERSION = "1.0.0" as const;
 
@@ -146,4 +149,20 @@ export interface ValidationResult {
   valid: boolean;
   errors: ValidationError[];
   warnings: ValidationWarning[];
+}
+
+/**
+ * JSON Schema for LLM structured output, e.g. Gemini `responseJsonSchema` via `@google/genai` with
+ * `responseMimeType: "application/json"`. `provenance` is omitted (the server sets it). Pass the catalogue's
+ * types (`ASSET_TYPES` from @twin/catalogue) so the model can only choose known assets. Always run
+ * `validateAndParse()` on the result: bounds, overlaps and uniqueness are not expressible here.
+ */
+export function toLlmJsonSchema(opts: { objectTypes?: readonly string[] } = {}): JsonSchema {
+  const schema = zodToGeminiJsonSchema(EnvironmentSpecSchema.omit({ provenance: true }));
+  if (opts.objectTypes?.length) {
+    const objects = (schema.properties as Record<string, JsonSchema>).objects!;
+    const props = (objects.items as JsonSchema).properties as Record<string, JsonSchema>;
+    props.type = { type: "string", enum: [...opts.objectTypes] };
+  }
+  return schema;
 }
