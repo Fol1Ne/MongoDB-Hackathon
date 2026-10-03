@@ -7,7 +7,9 @@
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
     "db:init": "tsx src/db/init.ts",
-    "db:vector": "tsx src/db/vector.ts"
+    "db:vector": "tsx src/db/vector.ts",
+    "db:seed": "tsx src/db/seed.ts",
+    "smoke": "tsx src/db/smoke.ts"
   },
   "dependencies": {
     "@twin/schema": "*",

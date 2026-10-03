@@ -81,3 +81,6 @@ Atlas embeds `summaryText` and the query text itself (Automated Embedding), so t
 - LLM/generation code: call `validateAndParse(raw)` from `@twin/validator` (or `/validate`), then `POST /environments`. Never write to Mongo directly.
 - Viewer: `GET /environments/:id` → `version.spec`.
 - Catalogue for prompts: `ASSET_CATALOGUE` from `@twin/catalogue`.
+- Demo scenes: `apps/api/demo-scenes/{warehouse,factory,office,outdoor}.json` are valid specs, with zero errors and zero warnings.
+  - Use them as few-shot examples, as an offline demo fallback, or as viewer test data.
+  - `npm run db:seed` loads them into MongoDB.
