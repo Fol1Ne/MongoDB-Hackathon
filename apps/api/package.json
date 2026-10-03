@@ -15,6 +15,7 @@
     "@twin/schema": "*",
     "@twin/catalogue": "*",
     "@twin/validator": "*",
+    "@twin/sim": "*",
     "@google/generative-ai": "^0.21.0",
     "axios": "^1.7.7",
     "fastify": "^5.0.0",
