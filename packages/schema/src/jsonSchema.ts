@@ -9,6 +9,12 @@ export type JsonSchema = { [key: string]: unknown };
  * exclusive bounds become inclusive ones. The validator still enforces the exact rules, so always validate output.
  */
 export function zodToGeminiJsonSchema(schema: ZodTypeAny): JsonSchema {
+  const out = translate(schema);
+  // Descriptions carry rules Gemini can't enforce itself (e.g. "radians", id format); keep them, wrappers included.
+  return schema.description && out.description === undefined ? { ...out, description: schema.description } : out;
+}
+
+function translate(schema: ZodTypeAny): JsonSchema {
   const def = schema._def as any; // Zod 3 internal definition; typeName is stable across 3.x
   switch (def.typeName) {
     case "ZodObject": {

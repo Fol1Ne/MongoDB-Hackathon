@@ -20,7 +20,7 @@ describe("toLlmJsonSchema", () => {
   });
 
   it("emits vec3 tuples as fixed-length number arrays", () => {
-    expect(prop(schema, "objects", "[]", "position")).toEqual({ type: "array", items: { type: "number" }, minItems: 3, maxItems: 3 });
+    expect(prop(schema, "objects", "[]", "position")).toMatchObject({ type: "array", items: { type: "number" }, minItems: 3, maxItems: 3 });
     expect(prop(schema, "objects", "[]", "scale")).toMatchObject({ items: { type: "number", minimum: 0.1, maximum: 10 } });
   });
 
@@ -51,6 +51,14 @@ describe("zodToGeminiJsonSchema", () => {
     expect(zodToGeminiJsonSchema(z.tuple([z.string(), z.number()]))).toEqual({
       type: "array", prefixItems: [{ type: "string" }, { type: "number" }], minItems: 2, maxItems: 2,
     });
+  });
+
+  it("carries Zod descriptions through, including on wrapped and tuple types", () => {
+    expect(zodToGeminiJsonSchema(z.string().describe("an id"))).toEqual({ type: "string", description: "an id" });
+    expect(zodToGeminiJsonSchema(z.object({ a: z.number().optional().describe("metres") }).strict()))
+      .toMatchObject({ properties: { a: { type: "number", description: "metres" } } });
+    expect(zodToGeminiJsonSchema(z.tuple([z.number(), z.number()]).describe("radians")))
+      .toMatchObject({ type: "array", description: "radians" });
   });
 
   it("fails loudly on Zod types it can't translate", () => {
