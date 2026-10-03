@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ASSET_CATALOGUE } from "@twin/catalogue";
+import { EnvironmentObjectSchema, WaypointSchema } from "@twin/schema";
 import { validateAndParse, validateEnvironmentSpec } from "../src";
 import { clone, makeSpec } from "./fixtures";
 
@@ -169,6 +170,13 @@ describe("ids are USD prim names", () => {
     const spec = makeSpec();
     spec.objects[0]!.id = id;
     expect(validateEnvironmentSpec(spec).valid).toBe(true);
+  });
+
+  it("documents the id, position and rotation rules for generated (LLM) schemas", () => {
+    expect(EnvironmentObjectSchema.shape.id.description).toMatch(/USD prim name/);
+    expect(WaypointSchema.shape.id.description).toMatch(/USD prim name/);
+    expect(EnvironmentObjectSchema.shape.position.description).toMatch(/metres/);
+    expect(EnvironmentObjectSchema.shape.rotation.description).toMatch(/radians/);
   });
 
   it("applies the same rule to waypoint ids", () => {

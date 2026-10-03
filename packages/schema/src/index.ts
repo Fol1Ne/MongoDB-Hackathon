@@ -25,7 +25,8 @@ export const CollisionShapeSchema = z.enum(["box", "cylinder", "mesh"]);
 /** Ids become USD prim names in the compiler, so they must be identifiers: no '-', '.', or leading digit. */
 const IdSchema = z
   .string()
-  .regex(/^[A-Za-z_][A-Za-z0-9_]{0,63}$/, "id must start with a letter or _ and contain only letters, digits and _ (max 64)");
+  .regex(/^[A-Za-z_][A-Za-z0-9_]{0,63}$/, "id must start with a letter or _ and contain only letters, digits and _ (max 64)")
+  .describe("Unique id, used as a USD prim name: a letter or _ followed by letters, digits or _ (max 64); no '-' or '.'");
 
 export const ObjectPhysicsSchema = z
   .object({
@@ -39,15 +40,15 @@ export const EnvironmentObjectSchema = z
   .object({
     id: IdSchema,
     type: z.string().min(1),
-    position: Vec3Schema,
-    rotation: Vec3Schema,
+    position: Vec3Schema.describe("[x, y, z] metres: centre of the footprint at the object's base (y = bottom)"),
+    rotation: Vec3Schema.describe("[rx, ry, rz] Euler XYZ in radians (not degrees), within ±2π"),
     scale: z.tuple([PositiveScaleSchema, PositiveScaleSchema, PositiveScaleSchema]),
     physics: ObjectPhysicsSchema.optional(),
     tags: z.array(z.string().min(1).max(64)).max(32).optional(),
   })
   .strict();
 
-export const WaypointSchema = z.object({ id: IdSchema, position: Vec3Schema }).strict();
+export const WaypointSchema = z.object({ id: IdSchema, position: Vec3Schema.describe("[x, y, z] metres") }).strict();
 
 export const EnvironmentSpecSchema = z
   .object({
