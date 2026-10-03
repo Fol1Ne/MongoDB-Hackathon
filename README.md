@@ -4,6 +4,7 @@
 packages/schema     Zod EnvironmentSpec + types (source of truth)
 packages/catalogue  15-asset catalogue
 packages/validator  structural -> referential -> geometric -> physical validation
+packages/sim        twin-sim-2d: deterministic robot route simulator (A* + 10 Hz telemetry), browser-safe
 apps/api            Fastify routes + repository + $jsonSchema (src/db/jsonSchema.ts)
 infra/mongo         docker-compose (replica set) + setup notes
 docs/api.md         API contract
