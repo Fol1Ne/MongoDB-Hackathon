@@ -1,312 +1,44 @@
 {
   "schemaVersion": "1.0.0",
   "environment": {
-    "name": "Office floor with desks and a charging dock",
+    "name": "Office Navigation Grid",
     "type": "office",
-    "dimensions": {
-      "width": 15,
-      "length": 12,
-      "height": 3
-    }
+    "dimensions": { "width": 30, "length": 40, "height": 4 }
   },
   "terrain": {
     "type": "tile",
-    "properties": {
-      "friction": 0.5,
-      "restitution": 0.1
-    },
+    "properties": { "friction": 0.6, "restitution": 0.01 },
     "heightmap": null
   },
   "objects": [
-    {
-      "id": "table_1",
-      "type": "table",
-      "position": [
-        -3,
-        0,
-        -3
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "table_2",
-      "type": "table",
-      "position": [
-        -0.5,
-        0,
-        -3
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "table_3",
-      "type": "table",
-      "position": [
-        -3,
-        0,
-        0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "table_4",
-      "type": "table",
-      "position": [
-        -0.5,
-        0,
-        0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "chair_1",
-      "type": "chair",
-      "position": [
-        -3,
-        0,
-        -2.2
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "physics": {
-        "static": false,
-        "mass": 8
-      }
-    },
-    {
-      "id": "chair_2",
-      "type": "chair",
-      "position": [
-        -0.5,
-        0,
-        -2.2
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "physics": {
-        "static": false,
-        "mass": 8
-      }
-    },
-    {
-      "id": "chair_3",
-      "type": "chair",
-      "position": [
-        -3,
-        0,
-        0.8
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "physics": {
-        "static": false,
-        "mass": 8
-      }
-    },
-    {
-      "id": "chair_4",
-      "type": "chair",
-      "position": [
-        -0.5,
-        0,
-        0.8
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "physics": {
-        "static": false,
-        "mass": 8
-      }
-    },
-    {
-      "id": "wall_1",
-      "type": "wall",
-      "position": [
-        4,
-        0,
-        2
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "wall_2",
-      "type": "wall",
-      "position": [
-        -7.4,
-        0,
-        3
-      ],
-      "rotation": [
-        0,
-        1.5707963267948966,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "charger_1",
-      "type": "charging_station",
-      "position": [
-        6.5,
-        0,
-        -5
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "box_1",
-      "type": "box",
-      "position": [
-        5,
-        0,
-        4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "physics": {
-        "static": false,
-        "mass": 2
-      }
-    }
+    { "id": "desk_001",    "type": "table",  "position": [-10, 0, -15], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_002",    "type": "table",  "position": [-10, 0, -10], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_003",    "type": "table",  "position": [-10, 0, -5],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_004",    "type": "table",  "position": [5, 0, -15],   "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_005",    "type": "table",  "position": [5, 0, -10],   "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "desk_006",    "type": "table",  "position": [5, 0, -5],    "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["office"] },
+    { "id": "chair_001",   "type": "chair",  "position": [-8, 0, -15],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": false, "mass": 8 },   "tags": ["office"] },
+    { "id": "chair_002",   "type": "chair",  "position": [-8, 0, -10],  "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": false, "mass": 8 },   "tags": ["office"] },
+    { "id": "chair_003",   "type": "chair",  "position": [-8, 0, -5],   "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": false, "mass": 8 },   "tags": ["office"] },
+    { "id": "barrier_001", "type": "barrier",      "position": [0, 0, 5],     "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["safety"] },
+    { "id": "barrier_002", "type": "barrier",      "position": [0, 0, 10],    "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["safety"] },
+    { "id": "charge_001",  "type": "charging_station", "position": [12, 0, 18], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["robot"] }
   ],
-  "lighting": {
-    "preset": "office",
-    "intensity": 0.8
-  },
+  "lighting": { "preset": "office_ambient", "intensity": 0.9 },
   "navigation": {
     "waypoints": [
-      {
-        "id": "wp_entrance",
-        "position": [
-          0,
-          0,
-          5
-        ]
-      },
-      {
-        "id": "wp_desks",
-        "position": [
-          -1.75,
-          0,
-          -1.5
-        ]
-      },
-      {
-        "id": "wp_charge",
-        "position": [
-          6.5,
-          0,
-          -4
-        ]
-      }
+      { "id": "wp_entrance", "position": [0, 0, -18] },
+      { "id": "wp_aisle_a",  "position": [-5, 0, -10] },
+      { "id": "wp_aisle_b",  "position": [0, 0, -10] },
+      { "id": "wp_charge",   "position": [12, 0, 17] }
     ]
   },
-  "robotics": {
-    "simulation_enabled": true
-  },
+  "robotics": { "simulation_enabled": true },
   "provenance": {
-    "source": "manual",
-    "prompt": null,
-    "model": null,
-    "generatedAt": "2026-10-03T12:00:00Z",
+    "source": "text",
+    "prompt": "An office environment with desks, chairs, and navigation barriers for an AMR delivery robot",
+    "model": "demo",
+    "generatedAt": "2026-10-03T00:00:00Z",
     "confidence": null
   }
 }

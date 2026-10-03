@@ -15,6 +15,11 @@ npm run smoke                 # create → edit → 400 → 409 → revert → h
 ```
 On Atlas M0, `smoke` also proves that multi-document transactions work on the free tier.
 
+**Vector search (Atlas only):** seed a few environments first, then run `npm run db:vector`.
+- **What it does:** creates `env_summary_autoembed` on `environment_versions.summaryText` using Atlas Automated Embedding (`voyage-4-lite`), then waits until the index is queryable. No embedding code or API key is needed in the app.
+- **M0 limits:** 3 search indexes per cluster, so the team should share one database for vector search. Query embedding is limited to 3 requests/min until the Atlas organisation has a payment method; the free Voyage token allowance still applies.
+- **If the driver can't create the index:** create it in the Atlas UI (Atlas Search → Vector Search → JSON editor) from `infra/mongo/vector-index.json`.
+
 **Local:** `docker compose -f infra/mongo/docker-compose.yml up -d`, then use
 `MONGODB_URI='mongodb://localhost:27017/?replicaSet=rs0'`.
 

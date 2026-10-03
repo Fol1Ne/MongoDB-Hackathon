@@ -15,6 +15,7 @@ Base URL: `/api/v1` · JSON in/out · no auth yet. Frontend never needs MongoDB 
 | 404 | `NOT_FOUND` | unknown environment/version/route |
 | 409 | `VERSION_CONFLICT` | `baseVersion` is stale, or concurrent write |
 | 409 | `ALREADY_AT_VERSION` | revert target is already the head |
+| 503 | `SEARCH_UNAVAILABLE` | vector search isn't available (local DB, index still building, embedding rate limit) |
 
 Validation codes: `SCHEMA_INVALID UNKNOWN_ASSET_TYPE DUPLICATE_OBJECT_ID DUPLICATE_WAYPOINT_ID OUT_OF_BOUNDS OVERLAP INVALID_SCALE INVALID_DIMENSIONS INVALID_FRICTION INVALID_RESTITUTION INVALID_MASS` (+ warning-only `WAYPOINT_IN_OBSTACLE`, and `OVERLAP` when an object is dynamic).
 
@@ -54,6 +55,23 @@ Query: `order=asc|desc` (default `asc`: v1, v2, …), `limit`, `offset`
 ## POST /environments/:id/revert
 Body: `{ "toVersion": 1, "changeNote"?: string, "baseVersion"?: number }`
 Creates a NEW version (copy of `toVersion`'s spec, `parentVersionId` = current head, `revertedFromVersion` = `toVersion`). History is never deleted. → **201** `{ environment, version, warnings }`
+
+## GET /environments/similar: find similar environments (Atlas Vector Search)
+Query: `text` (3–500 chars) **or** `environmentId`, plus optional `type` and `limit` (1–20, default 5).
+- With `environmentId`, the query is that environment's head summary, and the environment itself is excluded.
+
+→ `{ "items": [ { "environmentId", "versionId", "version", "name", "type", "summaryText", "score" } ] }`
+- Each item is the **current head** of a matching environment, highest score first. Older versions never appear.
+- Hits carry no `spec`; fetch it with `GET /environments/:id`.
+
+Atlas embeds `summaryText` and the query text itself (Automated Embedding), so there are no vectors or embedding keys in the app.
+- **Setup:** run `npm run db:vector` once (see `infra/mongo/README.md`).
+- **503 `SEARCH_UNAVAILABLE`** is returned when search isn't available. `details[0].reason` says why:
+  - a local mongod without Atlas Search;
+  - the index is missing or still building;
+  - Atlas's embedding rate limit.
+  Saves are unaffected. Any other database error is a 500.
+- **LLM few-shot examples:** use this endpoint, or `repo.similar()`, rather than embedding with another provider and adding a second index. M0 allows 3 search indexes, and every query counts toward M0's limit of 3 query embeddings per minute when the Atlas organization has no payment method.
 
 ## Helpers
 - `POST /environments/validate` body `{ "spec": ... }` → `{ valid, errors[], warnings[] }`. Writes nothing; use for live editor feedback and the LLM repair loop.

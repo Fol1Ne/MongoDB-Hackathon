@@ -10,6 +10,7 @@
     "test:api": "vitest run apps/api",
     "dev": "npm run dev -w @twin/api",
     "db:init": "npm run db:init -w @twin/api",
+    "db:vector": "npm run db:vector -w @twin/api",
     "db:seed": "npm run db:seed -w @twin/api",
     "smoke": "npm run smoke -w @twin/api"
   },

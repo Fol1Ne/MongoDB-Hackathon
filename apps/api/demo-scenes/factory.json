@@ -1,239 +1,42 @@
 {
   "schemaVersion": "1.0.0",
   "environment": {
-    "name": "Factory cell with conveyor line",
+    "name": "Factory Floor Beta",
     "type": "factory",
-    "dimensions": {
-      "width": 20,
-      "length": 20,
-      "height": 8
-    }
+    "dimensions": { "width": 40, "length": 60, "height": 10 }
   },
   "terrain": {
     "type": "concrete",
-    "properties": {
-      "friction": 0.7,
-      "restitution": 0.05
-    },
+    "properties": { "friction": 0.9, "restitution": 0.02 },
     "heightmap": null
   },
   "objects": [
-    {
-      "id": "conveyor_1",
-      "type": "conveyor",
-      "position": [
-        -1.6,
-        0,
-        0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "conveyor_2",
-      "type": "conveyor",
-      "position": [
-        1.6,
-        0,
-        0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "workbench_1",
-      "type": "workbench",
-      "position": [
-        -5,
-        0,
-        4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "workbench_2",
-      "type": "workbench",
-      "position": [
-        5,
-        0,
-        4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "box_1",
-      "type": "box",
-      "position": [
-        5,
-        0.9,
-        4
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "physics": {
-        "static": false,
-        "mass": 2
-      }
-    },
-    {
-      "id": "rack_1",
-      "type": "storage_rack",
-      "position": [
-        0,
-        0,
-        -7
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "barrier_1",
-      "type": "barrier",
-      "position": [
-        -8,
-        0,
-        -6
-      ],
-      "rotation": [
-        0,
-        1.5707963267948966,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "barrier_2",
-      "type": "barrier",
-      "position": [
-        4,
-        0,
-        -3
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "id": "charger_1",
-      "type": "charging_station",
-      "position": [
-        8.5,
-        0,
-        8.5
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    }
+    { "id": "conveyor_001", "type": "conveyor",        "position": [-10, 0, -20], "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["production"] },
+    { "id": "conveyor_002", "type": "conveyor",        "position": [0,  0, -20],  "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["production"] },
+    { "id": "conveyor_003", "type": "conveyor",        "position": [10, 0, -20],  "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["production"] },
+    { "id": "machine_001",  "type": "workbench",   "position": [-15, 0, 5],   "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["production"] },
+    { "id": "machine_002",  "type": "workbench",   "position": [15, 0, 5],    "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["production"] },
+    { "id": "bench_001",    "type": "workbench",       "position": [-15, 0, 20],  "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["work_area"] },
+    { "id": "bench_002",    "type": "workbench",       "position": [15, 0, 20],   "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["work_area"] },
+    { "id": "column_001",   "type": "warehouse_column", "position": [-18, 0, -25], "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["structural"] },
+    { "id": "column_002",   "type": "warehouse_column", "position": [18, 0, -25],  "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["structural"] },
+    { "id": "charge_001",   "type": "charging_station","position": [0, 0, 25],    "rotation": [0, 0, 0],              "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["robot"] }
   ],
-  "lighting": {
-    "preset": "factory_bright",
-    "intensity": 1.1
-  },
+  "lighting": { "preset": "factory_overhead", "intensity": 1.2 },
   "navigation": {
     "waypoints": [
-      {
-        "id": "wp_start",
-        "position": [
-          -7,
-          0,
-          8
-        ]
-      },
-      {
-        "id": "wp_line",
-        "position": [
-          0,
-          0,
-          -3.5
-        ]
-      },
-      {
-        "id": "wp_charge",
-        "position": [
-          8.5,
-          0,
-          7.5
-        ]
-      }
+      { "id": "wp_entry",   "position": [0, 0, -28] },
+      { "id": "wp_line_a",  "position": [-10, 0, -18] },
+      { "id": "wp_line_b",  "position": [10, 0, -18] },
+      { "id": "wp_charge",  "position": [0, 0, 24] }
     ]
   },
-  "robotics": {
-    "simulation_enabled": true
-  },
+  "robotics": { "simulation_enabled": true },
   "provenance": {
-    "source": "manual",
-    "prompt": null,
-    "model": null,
-    "generatedAt": "2026-10-03T12:00:00Z",
+    "source": "text",
+    "prompt": "A 40 by 60 metre factory floor with three conveyor lines, two machine stations, and charging dock",
+    "model": "demo",
+    "generatedAt": "2026-10-03T00:00:00Z",
     "confidence": null
   }
 }
