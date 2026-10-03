@@ -1,8 +1,13 @@
 # Person 1 — Backend & AI Integration
 
-## Goal
+**Project:** AI-Powered 3D Environment Platform for Robotics  
+**Role:** Person 1 — LLM Router, Prompt Engineering, Repair Loop, Cache, Generate Endpoint  
+**Status:** Hackathon implementation plan  
+**Primary responsibility:** Accept a text prompt, call Gemini, validate the output using Person 3's validator, and return a valid `EnvironmentSpec` to the caller. Save the result to MongoDB using Person 3's versioned data layer.
 
-Build the Node.js/TypeScript API that accepts a text prompt and returns a valid `EnvironmentSpec` JSON. Done when `POST /environments/generate` with a prompt returns a validated spec that saves to MongoDB.
+> **Dependency:** Person 3 owns the Zod schema, asset catalogue, validator, and MongoDB collections.  
+> I import and call their code. I do not duplicate it.  
+> Coordinate with Person 3 within the first 20 minutes to agree on exports and collection names.
 
 ---
 
@@ -14,32 +19,37 @@ Client prompt
     v
 POST /api/v1/environments/generate
     |
-    +-- Rate limit (express-rate-limit)
-    +-- JWT auth check (stub for hackathon if needed)
+    +-- Rate limit (10 req/min per IP)
+    +-- Auth stub (accept all if no Authorization header)
     |
     v
-Cache check (sha256 of prompt) ──hit──> return cached spec
+Cache check sha256(prompt)
+    |
+  hit ──────────────────────────────────────> return { spec, cached: true }
     |
   miss
     |
     v
-Embed prompt (Gemini embedding)
+Embed prompt (Gemini text-embedding-004)
     |
     v
-MongoDB $vectorSearch → top-3 similar specs (few-shot examples)
+Person 3's MongoDB: $vectorSearch environment_versions
+  → top-3 similar specs as few-shot examples
+  (fallback to built-in demo scenes if MongoDB unavailable)
     |
     v
-Build system prompt (role + rules + catalogue + examples)
+Build system prompt
+  (role + rules + Person 3's catalogue + examples)
     |
     v
 LLM Router
-  1. Gemini Flash (primary, responseSchema enforced)
-  2. OpenRouter free model (fallback on 429/5xx)
+  1. Gemini 1.5 Flash (primary, responseSchema = Person 3's JSON Schema)
+  2. OpenRouter meta-llama/llama-3.1-8b-instruct:free (fallback on 429/5xx)
     |
     v
-Validator (Zod → referential → bounds → overlap)
+Person 3's Validator (structural → referential → geometric → physical)
     |
-  invalid + retries < 2
+  invalid + attempts < 2
     |
     v
 Repair prompt (original + bad spec + error list) → LLM again
@@ -47,7 +57,10 @@ Repair prompt (original + bad spec + error list) → LLM again
   valid
     |
     v
-Save to MongoDB (environment_versions + environments head)
+Person 3's save logic: insert environment_versions, update environments head
+    |
+    v
+Store in cache
     |
     v
 Return { environmentId, versionId, spec, provider, warnings }
@@ -55,104 +68,148 @@ Return { environmentId, versionId, spec, provider, warnings }
 
 ---
 
-## Project structure
+## Project structure (your files only)
 
 ```
 apps/api/
   src/
-    index.ts                   Express app entry, registers routes
+    index.ts                     Express app entry, CORS, registers routes
     routes/
-      environments.ts          POST /environments/generate, GET list
-      jobs.ts                  GET /jobs/:id (polling)
+      generate.ts                POST /api/v1/environments/generate
+      jobs.ts                    GET /api/v1/jobs/:id
     llm/
-      interface.ts             LLMProvider TypeScript interface
-      gemini.ts                Gemini Flash provider
-      openrouter.ts            OpenRouter fallback provider
-      router.ts                Provider selection + repair loop (max 2 retries)
-      prompts.ts               System prompt + repair prompt builders
-    validation/
-      schema.ts                Zod EnvironmentSpec schema (single source of truth)
-      validator.ts             4-layer validation (structural/referential/bounds/overlap)
-    catalogue/
-      assets.ts                12-15 known object types with footprints
-    db/
-      client.ts                MongoDB connection from MONGODB_URI env
-      collections.ts           Typed collection wrappers + $jsonSchema setup on startup
-    cache.ts                   In-memory Map keyed by sha256(prompt), TTL 1hr
+      interface.ts               LLMProvider TypeScript interface
+      gemini.ts                  Gemini 1.5 Flash provider
+      openrouter.ts              OpenRouter fallback provider
+      router.ts                  Provider selection + repair loop (max 2 retries)
+      prompts.ts                 System prompt + repair prompt builders
+    cache.ts                     In-memory Map, sha256 key, 1hr TTL
     middleware/
-      auth.ts                  JWT verify (stub: accept all if no Authorization header)
-      rateLimit.ts             10 req/min per IP
+      auth.ts                    JWT stub (accept all if no header)
+      rateLimit.ts               10 req/min per IP
   demo-scenes/
-    warehouse.json             Pre-generated valid spec (warehouse, 6 shelf aisles)
-    factory.json               Pre-generated valid spec (factory floor)
-    office.json                Pre-generated valid spec (office navigation)
-    outdoor.json               Pre-generated valid spec (outdoor terrain)
-  package.json
-  tsconfig.json
-  .env.example
+    warehouse.json               Pre-generated valid spec (backup / few-shot)
+    factory.json
+    office.json
+    outdoor.json
 ```
+
+**Not your files — import from Person 3:**
+- `packages/schema/src/schema.ts` → Zod schema + JSON Schema export
+- `packages/schema/src/catalogue.ts` → `ASSET_CATALOGUE`, `KNOWN_TYPES`
+- `packages/validator/src/validator.ts` → `validate(spec)` function
+- `apps/api/src/db/` → MongoDB client, collections, save helpers
+
+Agree the exact import paths with Person 3 on day one.
 
 ---
 
-## EnvironmentSpec JSON shape (agree with teammates before coding)
+## EnvironmentSpec (Person 3's contract — do not redefine)
 
-This is the contract everyone builds against. Person 2 (frontend) renders it; Person 3 (data) writes the Zod schema and MongoDB validator. Use the warehouse example below as the hardcoded sample spec until the real API lands.
+Person 3 owns this. Copy nothing; import everything. Use the shape below as a reference only — for reading, not for building your own types.
 
-```json
-{
-  "schemaVersion": "1.0.0",
-  "environment": {
-    "name": "Warehouse Environment",
-    "type": "warehouse",
-    "dimensions": { "width": 50, "length": 80, "height": 12 }
-  },
-  "terrain": {
-    "type": "concrete",
-    "properties": { "friction": 0.8, "restitution": 0.05 },
-    "heightmap": null
-  },
-  "objects": [
-    {
-      "id": "shelf_001",
-      "type": "industrial_shelf",
-      "position": [10, 0, 15],
-      "rotation": [0, 0, 0],
-      "scale": [1, 1, 1],
-      "physics": { "static": true, "mass": null },
-      "tags": ["storage"]
-    }
-  ],
-  "lighting": { "preset": "warehouse_overhead", "intensity": 1.0 },
-  "navigation": {
-    "waypoints": [
-      { "id": "wp_start", "position": [0, 0, 0] },
-      { "id": "wp_dock", "position": [-20, 0, 35] }
-    ]
-  },
-  "robotics": { "simulation_enabled": true },
-  "provenance": {
-    "source": "text",
-    "prompt": "A 50 by 80 metre warehouse with 6 shelf aisles and a loading dock.",
-    "model": "gemini-1.5-flash",
-    "generatedAt": "2026-09-29T14:20:00Z",
-    "confidence": null
-  }
+```ts
+// You IMPORT this, not define it:
+// import { EnvironmentSpecSchema, environmentSpecJsonSchema } from 'packages/schema'
+// import { EnvironmentSpec } from 'packages/schema'
+
+EnvironmentSpec {
+  schemaVersion: "1.0.0";
+
+  environment: {
+    name: string;
+    type: "warehouse" | "factory" | "office" | "outdoor" | "custom";
+    dimensions: { width: number; length: number; height: number };
+  };
+
+  terrain: {
+    type: "concrete" | "asphalt" | "grass" | "gravel" | "tile" | "dirt" | "custom";
+    properties: { friction: number; restitution?: number };
+    heightmap?: unknown | null;
+  };
+
+  objects: Array<{
+    id: string;
+    type: string;              // must be in Person 3's catalogue
+    position: [number, number, number];
+    rotation: [number, number, number];
+    scale: [number, number, number];
+    physics?: { static: boolean; mass: number | null };
+    tags?: string[];
+  }>;
+
+  lighting?: { preset?: string; intensity?: number };
+  navigation?: { waypoints?: Array<{ id: string; position: [number, number, number] }> };
+  robotics: { simulation_enabled: boolean };
+
+  provenance: {
+    source: string;
+    prompt?: string;
+    model?: string;
+    generatedAt?: string;
+    confidence?: number | null;
+  };
 }
 ```
 
-Coordinate conventions: metres, Y-up, origin at environment centre on the ground plane.
+Coordinate systems: metres, Y-up. X = width, Y = height, Z = length.
+
+---
+
+## Asset catalogue (Person 3's — inject into prompts, do not redefine)
+
+Person 3's catalogue includes these 15 types. Import and use them verbatim in your LLM prompts.
+
+| type | footprint (m) | height (m) |
+|---|---|---|
+| `industrial_shelf` | 1.2 × 0.6 | 2.4 |
+| `pallet` | 1.2 × 0.8 | 0.15 |
+| `workbench` | 1.8 × 0.8 | 0.9 |
+| `storage_rack` | 1.5 × 0.6 | 2.0 |
+| `forklift_zone` | 3.0 × 4.0 | 0.1 |
+| `loading_dock` | 5.0 × 3.0 | 1.2 |
+| `conveyor` | 4.0 × 0.8 | 0.9 |
+| `machine_station` | 2.0 × 1.5 | 2.0 |
+| `office_desk` | 1.4 × 0.7 | 0.75 |
+| `office_chair` | 0.6 × 0.6 | 1.0 |
+| `crate` | 0.8 × 0.8 | 0.8 |
+| `barrier` | 2.0 × 0.2 | 1.0 |
+| `column` | 0.4 × 0.4 | 4.0 |
+| `door` | 1.0 × 0.1 | 2.1 |
+| `charging_station` | 0.6 × 0.6 | 1.5 |
+
+---
+
+## Validation result format (Person 3's — do not redefine)
+
+```ts
+// You call: import { validate } from 'packages/validator'
+// Result shape:
+interface ValidationResult {
+  valid: boolean;
+  errors: { path: string; code: string; message: string }[];
+  warnings: { path: string; code: string; message: string }[];
+}
+// Error codes: SCHEMA_INVALID, UNKNOWN_ASSET, DUPLICATE_ID,
+//              OUT_OF_BOUNDS, OVERLAP, INVALID_SCALE,
+//              INVALID_DIMENSIONS, INVALID_PHYSICS
+```
 
 ---
 
 ## API endpoints (your responsibility)
 
-| Method | Path | Body / Query | Returns |
-|--------|------|--------------|---------|
-| POST | `/api/v1/environments/generate` | `{ prompt, projectId? }` | `{ environmentId, versionId, spec, provider, warnings }` |
+| Method | Path | Body | Returns |
+|--------|------|------|---------|
+| POST | `/api/v1/environments/generate` | `{ prompt: string, projectId?: string }` | `{ environmentId, versionId, spec, provider, warnings }` or error |
 | GET | `/api/v1/jobs/:id` | — | `{ status, result? }` |
-| GET | `/api/v1/assets/catalogue` | — | array of asset definitions |
 
-Person 3 owns save/list/revert/history endpoints. You own the generation side.
+**Person 3's endpoints (do not build these):**
+- `GET /environments`, `GET /environments/:id`
+- `GET /environments/:id/versions`, `GET /environments/:id/versions/:n`
+- `PUT /environments/:id` (save edited spec)
+- `POST /environments/:id/revert`
+- `GET /assets/catalogue`
 
 ---
 
@@ -161,55 +218,23 @@ Person 3 owns save/list/revert/history endpoints. You own the generation side.
 ### Step 1 — Scaffold (15 min)
 
 ```bash
-mkdir -p apps/api/src/{routes,llm,validation,catalogue,db,middleware}
+mkdir -p apps/api/src/{routes,llm,middleware}
 mkdir -p apps/api/demo-scenes
 cd apps/api
 npm init -y
-npm install express @google/generative-ai zod zod-to-json-schema mongodb \
-            jsonwebtoken express-rate-limit dotenv axios
-npm install -D typescript @types/express @types/node ts-node tsx
-npx tsc --init  # then set target: ES2022, module: commonjs, strict: true
+npm install express @google/generative-ai zod mongodb \
+            jsonwebtoken express-rate-limit dotenv axios cors
+npm install -D typescript @types/express @types/node @types/cors ts-node tsx
+npx tsc --init
+# tsconfig.json: target ES2022, module commonjs, strict true, outDir dist
 ```
 
-### Step 2 — Zod schema (`src/validation/schema.ts`)
+**Immediately coordinate with Person 3** to agree:
+- Where their `schema.ts`, `validator.ts`, and `catalogue.ts` will live
+- What the MongoDB database name and collection names are (`environments`, `environment_versions`)
+- What save/upsert helpers they will export for you to call
 
-Define `EnvironmentSpecSchema`. Key constraints:
-- `environment.type`: enum `["warehouse","factory","office","outdoor","custom"]`
-- `terrain.type`: enum `["concrete","asphalt","grass","gravel","tile","dirt","custom"]`
-- `terrain.properties.friction`: `z.number().min(0).max(2)`
-- `objects[].scale`: each element `z.number().positive()`
-- `objects[].id`: unique (enforced in validator layer, not Zod)
-- Max 500 objects
-
-Then export the JSON Schema for Gemini and MongoDB:
-```ts
-import { zodToJsonSchema } from 'zod-to-json-schema';
-export const environmentSpecJsonSchema = zodToJsonSchema(EnvironmentSpecSchema);
-```
-
-### Step 3 — Asset catalogue (`src/catalogue/assets.ts`)
-
-12 known types. Person 3 may expand this but you need it first for prompts and validation.
-
-```ts
-export const ASSET_CATALOGUE = [
-  { type: "industrial_shelf",         footprint: [1.2, 0.6],  height: 2.4 },
-  { type: "pallet",                   footprint: [1.2, 0.8],  height: 0.15 },
-  { type: "forklift_bay",             footprint: [3.0, 4.0],  height: 0.1 },
-  { type: "loading_dock",             footprint: [5.0, 3.0],  height: 1.2 },
-  { type: "wall_panel",               footprint: [4.0, 0.2],  height: 3.0 },
-  { type: "door",                     footprint: [1.0, 0.1],  height: 2.1 },
-  { type: "conveyor_belt",            footprint: [4.0, 0.8],  height: 0.9 },
-  { type: "robot_charging_station",   footprint: [0.6, 0.6],  height: 1.5 },
-  { type: "workbench",                footprint: [1.8, 0.8],  height: 0.9 },
-  { type: "storage_bin",              footprint: [0.6, 0.4],  height: 0.5 },
-  { type: "pillar",                   footprint: [0.3, 0.3],  height: 4.0 },
-  { type: "floor_marking",            footprint: [1.0, 0.1],  height: 0.01 },
-];
-export const KNOWN_TYPES = new Set(ASSET_CATALOGUE.map(a => a.type));
-```
-
-### Step 4 — LLM provider interface (`src/llm/interface.ts`)
+### Step 2 — LLM provider interface (`src/llm/interface.ts`)
 
 ```ts
 export interface LLMProvider {
@@ -222,136 +247,217 @@ export interface LLMProvider {
     temperature?: number;
   }): Promise<{ data: T; raw: string }>;
 }
-```
 
-### Step 5 — Gemini provider (`src/llm/gemini.ts`)
-
-- SDK: `@google/generative-ai`
-- Model: `gemini-1.5-flash`
-- Pass `responseSchema` = the exported `environmentSpecJsonSchema`
-- Temperature: `0.3`
-- Throw a typed `RetryableError` on HTTP 429 or 5xx so the router can catch it
-
-### Step 6 — OpenRouter fallback (`src/llm/openrouter.ts`)
-
-- POST to `https://openrouter.ai/api/v1/chat/completions`
-- Model: `meta-llama/llama-3.1-8b-instruct:free`
-- No native schema enforcement — include JSON schema in the system prompt and parse the response
-- Extract JSON from code fences if needed
-
-### Step 7 — Prompt builder (`src/llm/prompts.ts`)
-
-System prompt sections (in order):
-1. **Role**: "You convert natural-language descriptions into EnvironmentSpec JSON for robot simulation."
-2. **Rules**: metres, Y-up, positions must be inside environment bounds, only use the listed object types, no overlapping static objects, output raw JSON only (no markdown).
-3. **Schema**: paste a compact version of the JSON Schema.
-4. **Catalogue**: enumerated list — `type | footprint (m) | height (m)` for each asset.
-5. **Examples**: inject 1–3 similar specs retrieved from MongoDB (or hardcoded warehouse example if none available).
-6. **Request**: `User description: <prompt>`
-
-Repair prompt:
-```
-The spec you returned was invalid. Original request: <prompt>
-
-Invalid spec:
-<spec as JSON>
-
-Validation errors:
-<error list>
-
-Return a corrected EnvironmentSpec JSON that fixes every error listed. Output raw JSON only.
-```
-
-### Step 8 — LLM Router with repair loop (`src/llm/router.ts`)
-
-```
-async function generateWithRepair(prompt, examples):
-  providers = [geminiProvider, openRouterProvider]
-  for provider of providers:
-    try:
-      spec = await provider.generateStructured(buildSystemPrompt(examples), prompt, schema, 0.3)
-      result = validate(spec)
-      if result.valid: return { spec, provider.name }
-      
-      for attempt in [1, 2]:  // repair loop
-        spec = await provider.generateStructured(repairPrompt(prompt, spec, result.errors))
-        result = validate(spec)
-        if result.valid: return { spec, provider.name, warnings: result.warnings }
-      
-      // exhausted retries on this provider, try fallback
-    catch RetryableError:
-      continue  // try next provider
-  
-  throw new Error('PROVIDER_UNAVAILABLE')
-```
-
-### Step 9 — Validator (`src/validation/validator.ts`)
-
-4 layers, run in sequence. Stop at first layer failure (return errors immediately).
-
-1. **Structural** — `EnvironmentSpecSchema.safeParse(spec)`
-2. **Referential** — all `objects[].type` in `KNOWN_TYPES`; all `objects[].id` unique
-3. **Geometric** — for each object: `position[0] >= -dims.width/2 && <= dims.width/2` (X), same for Z with length, Y >= 0; all scale values > 0
-4. **Overlap** — AABB check for static objects: for each pair, check if `|x1-x2| < (fw1+fw2)/2 && |z1-z2| < (fd1+fd2)/2`. Flag as warning (not error) on overlap.
-
-Return format:
-```ts
-interface ValidationResult {
-  valid: boolean;
-  errors: { path: string; code: string; message: string }[];
-  warnings: { path: string; code: string; message: string }[];
+export class RetryableError extends Error {
+  constructor(message: string) { super(message); this.name = 'RetryableError'; }
 }
 ```
 
-### Step 10 — MongoDB setup (`src/db/`)
+### Step 3 — Gemini provider (`src/llm/gemini.ts`)
 
-`client.ts`: connect once from `process.env.MONGODB_URI`. Export client and db ref.
-
-`collections.ts`: on app startup, run `db.createCollection("environment_versions", { validator: { $jsonSchema: ... }, validationLevel: "strict", validationAction: "error" })` — catch `already exists` errors. Create indexes:
-- `environment_versions`: `{ environmentId: 1, version: -1 }` unique
-- `environments`: `{ ownerId: 1, updatedAt: -1 }`
-
-If MongoDB is unreachable, log and continue — the endpoint degrades to returning the spec without saving.
-
-### Step 11 — Cache (`src/cache.ts`)
+- SDK: `@google/generative-ai`
+- Model: `gemini-1.5-flash`
+- Pass `responseSchema` = `environmentSpecJsonSchema` imported from Person 3's schema package
+- Temperature: `0.3`
+- On HTTP 429 or any 5xx: throw `RetryableError`
+- On JSON parse failure: throw `RetryableError` (let router handle it)
+- Include `GEMINI_API_KEY` from env
 
 ```ts
-const cache = new Map<string, { spec: EnvironmentSpec; ts: number }>();
-const TTL_MS = 60 * 60 * 1000;
-
-export function getCached(key: string): EnvironmentSpec | null { ... }
-export function setCached(key: string, spec: EnvironmentSpec): void { ... }
-// cache key = sha256(prompt + version of catalogue)
+import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
+// responseSchema must be a Gemini-compatible schema object
+// Use environmentSpecJsonSchema from Person 3, converted to Gemini format
 ```
 
-Use Node's built-in `crypto.createHash('sha256')`.
+Note: Gemini's `responseSchema` uses its own schema format, not plain JSON Schema. You may need to convert or simplify Person 3's JSON Schema to pass it. A compact hand-written Gemini schema for `EnvironmentSpec` is fine here — just keep the field names exactly matching Person 3's Zod schema.
 
-### Step 12 — Generate route (`src/routes/environments.ts`)
+### Step 4 — OpenRouter fallback (`src/llm/openrouter.ts`)
+
+- POST `https://openrouter.ai/api/v1/chat/completions`
+- Model: `meta-llama/llama-3.1-8b-instruct:free`
+- No native `responseSchema` — include JSON schema in the system prompt and ask for raw JSON only
+- Strip markdown code fences before parsing: `text.replace(/```(?:json)?\n?/g, '').trim()`
+- On 429/5xx: throw `RetryableError`
+
+### Step 5 — Prompt builder (`src/llm/prompts.ts`)
+
+System prompt structure (in this order):
+
+```
+You convert natural-language environment descriptions into EnvironmentSpec JSON for robot simulation.
+
+RULES:
+- All measurements in metres, Y-up coordinate system. X=width, Y=height, Z=length.
+- Origin is at the environment centre on the ground plane.
+- All object positions MUST be inside environment bounds:
+    X: [-width/2, +width/2]  Y: >= 0  Z: [-length/2, +length/2]
+- Only use object types from the ASSET CATALOGUE below. No other types.
+- Object IDs must be unique strings (e.g. "shelf_001", "shelf_002").
+- Static objects should not overlap each other.
+- Output raw JSON only — no markdown, no explanation, no code fences.
+
+ASSET CATALOGUE:
+(paste catalogue table here, imported from Person 3's catalogue)
+
+EXAMPLES:
+(inject 1–3 similar specs from vector search or demo-scenes)
+
+USER DESCRIPTION:
+(user prompt)
+```
+
+Repair prompt:
+
+```
+The EnvironmentSpec you returned was invalid. Fix every listed error.
+
+ORIGINAL REQUEST: (prompt)
+
+YOUR INVALID SPEC:
+(raw JSON)
+
+VALIDATION ERRORS:
+(errors array as JSON)
+
+Return a corrected EnvironmentSpec JSON only. No markdown. No explanation.
+```
+
+### Step 6 — LLM router with repair loop (`src/llm/router.ts`)
+
+```ts
+export async function generateWithRepair(
+  prompt: string,
+  examples: EnvironmentSpec[],
+  catalogue: CatalogueEntry[]
+): Promise<{ spec: EnvironmentSpec; provider: string; warnings: ValidationWarning[] }> {
+
+  const providers = [geminiProvider, openRouterProvider];
+
+  for (const provider of providers) {
+    try {
+      const system = buildSystemPrompt(catalogue, examples);
+      let { data: spec } = await provider.generateStructured({ system, prompt, jsonSchema, temperature: 0.3 });
+      let result = validate(spec);         // Person 3's validator
+
+      if (result.valid) {
+        return { spec, provider: provider.name, warnings: result.warnings };
+      }
+
+      // Repair loop — max 2 attempts on the same provider
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        const repairSystem = buildRepairPrompt(prompt, spec, result.errors);
+        ({ data: spec } = await provider.generateStructured({ system: repairSystem, prompt: '', jsonSchema, temperature: 0.2 }));
+        result = validate(spec);
+        if (result.valid) {
+          return { spec, provider: provider.name, warnings: result.warnings };
+        }
+      }
+
+      // This provider exhausted retries — try the next one
+    } catch (e) {
+      if (e instanceof RetryableError) continue;
+      throw e;
+    }
+  }
+
+  throw Object.assign(new Error('All providers failed'), { code: 'PROVIDER_UNAVAILABLE' });
+}
+```
+
+### Step 7 — Cache (`src/cache.ts`)
+
+```ts
+import { createHash } from 'crypto';
+
+interface CacheEntry { spec: EnvironmentSpec; ts: number }
+const store = new Map<string, CacheEntry>();
+const TTL_MS = Number(process.env.LLM_CACHE_TTL_SECONDS ?? 3600) * 1000;
+
+export function cacheKey(prompt: string): string {
+  return createHash('sha256').update(prompt).digest('hex');
+}
+
+export function getCached(key: string): EnvironmentSpec | null {
+  const entry = store.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.ts > TTL_MS) { store.delete(key); return null; }
+  return entry.spec;
+}
+
+export function setCached(key: string, spec: EnvironmentSpec): void {
+  store.set(key, { spec, ts: Date.now() });
+}
+```
+
+### Step 8 — Generate route (`src/routes/generate.ts`)
 
 ```
 POST /api/v1/environments/generate
 
 1. rateLimiter middleware
-2. authMiddleware (stub)
-3. parse + validate body (prompt required, string, 10–500 chars)
-4. cacheKey = sha256(prompt)
-5. if cache hit: return { spec, cached: true }
-6. embed prompt via Gemini embedding API
-7. $vectorSearch environment_versions for top-3 similar (fallback to [] if MongoDB unavailable)
-8. call generateWithRepair(prompt, examples)
-9. insert environment_versions doc, upsert environments head
-10. setCached(cacheKey, spec)
-11. return 200 { environmentId, versionId, spec, provider, warnings }
+2. authMiddleware (stub: if no Authorization header, attach userId = 'anon')
+3. body parse: { prompt: string (10–500 chars), projectId?: string }
+   → 400 if missing or invalid
+4. key = cacheKey(prompt)
+5. if getCached(key): return 200 { spec, cached: true }
+6. embed prompt via Gemini embedding API (model: text-embedding-004)
+7. Person 3's MongoDB: $vectorSearch environment_versions
+   → top-3 similar specs
+   → on any MongoDB error: use demo-scenes/warehouse.json as single example
+8. load catalogue from Person 3's module
+9. generateWithRepair(prompt, examples, catalogue)
+   → on PROVIDER_UNAVAILABLE: return 503 { error: { code: 'PROVIDER_UNAVAILABLE', ... } }
+10. Person 3's save helper: saveNewVersion(spec, { prompt, provider, projectId })
+    → on save error: log and continue (still return spec to client)
+11. setCached(key, spec)
+12. return 200 {
+      environmentId,  // from Person 3's save result
+      versionId,
+      spec,
+      provider,
+      warnings
+    }
 ```
 
-On any unhandled error: return `{ error: { code: "PROVIDER_UNAVAILABLE", message: "..." } }`.
+All errors return consistent shape:
+```json
+{ "error": { "code": "VALIDATION_FAILED", "message": "...", "details": [] } }
+```
+Codes: `VALIDATION_FAILED`, `PROVIDER_UNAVAILABLE`, `RATE_LIMITED`, `BAD_REQUEST`
 
-### Step 13 — Pre-generated demo scenes
+### Step 9 — Express app (`src/index.ts`)
 
-Write 4 valid JSON files in `demo-scenes/`. Each must pass the Zod validator. Use them as:
-- Fallback few-shot examples when MongoDB has no similar specs
-- Offline demo backup (serve from a `/demo/:name` endpoint)
-- Seed data for MongoDB on startup
+```ts
+import express from 'express';
+import cors from 'cors';
+import { generateRouter } from './routes/generate';
+import { jobsRouter } from './routes/jobs';
+import { connectMongo } from './db/client'; // Person 3's module
+
+const app = express();
+app.use(cors({ origin: process.env.CORS_ORIGIN ?? '*' }));
+app.use(express.json({ limit: '1mb' }));
+app.use('/api/v1/environments', generateRouter);
+app.use('/api/v1/jobs', jobsRouter);
+
+const PORT = process.env.PORT ?? 3001;
+connectMongo().catch(err => console.warn('MongoDB unavailable, running degraded:', err.message));
+app.listen(PORT, () => console.log(`API on port ${PORT}`));
+```
+
+### Step 10 — Pre-generated demo scenes (`demo-scenes/`)
+
+Write 4 valid JSON files that each pass `validate(spec)` cleanly:
+
+- `warehouse.json` — 50×80m, 6 industrial_shelf, 2 pallet, 1 loading_dock, 2 waypoints
+- `factory.json` — 40×60m, 4 workbench, 3 conveyor, 2 machine_station, 2 pillar
+- `office.json` — 20×30m, 6 office_desk, 6 office_chair, 2 barrier
+- `outdoor.json` — 80×100m grass terrain, 4 crate, 3 barrier, 2 charging_station
+
+These serve three purposes:
+1. Fallback few-shot examples for the LLM system prompt when MongoDB has no similar specs
+2. Offline/demo backup spec that works when Gemini is down
+3. Seed data for MongoDB on startup
 
 ---
 
@@ -363,32 +469,81 @@ GEMINI_API_KEY=
 OPENROUTER_API_KEY=
 JWT_SECRET=changeme
 PORT=3001
+CORS_ORIGIN=http://localhost:5173
 LLM_CACHE_TTL_SECONDS=3600
 ```
 
 ---
 
-## Interfaces shared with other persons
+## Interface contracts with other persons
 
-**Person 2 (frontend)** needs:
-- `POST /api/v1/environments/generate` working and CORS-enabled
-- The `EnvironmentSpec` JSON shape (section above) — share `schema.ts` or at minimum the JSON Schema export
-- Use the hardcoded warehouse `demo-scenes/warehouse.json` as the sample spec until the API is live
+### Person 3 (data/validation) — things you need from them
 
-**Person 3 (data/validation)** owns:
-- The canonical Zod schema (you write a draft in step 2; they refine it)
-- MongoDB `environment_versions` collection creation
-- Save / list / revert / history endpoints
+| What | Import path (agree on day 1) |
+|------|------|
+| `EnvironmentSpec` TypeScript type | `packages/schema` |
+| `EnvironmentSpecSchema` Zod schema | `packages/schema` |
+| `environmentSpecJsonSchema` JSON Schema object | `packages/schema` |
+| `ASSET_CATALOGUE`, `KNOWN_TYPES` | `packages/schema/catalogue` |
+| `validate(spec)` → `ValidationResult` | `packages/validator` |
+| MongoDB `connectMongo()` | `apps/api/src/db/client` |
+| `saveNewVersion(spec, meta)` helper | `apps/api/src/db/versions` |
+| `findSimilarVersions(embedding, topK)` | `apps/api/src/db/versions` |
 
-Coordinate: agree on `schema.ts` exports within the first 20 minutes.
+If Person 3 hasn't built the save helper yet, stub it locally and replace the import when they land it:
+```ts
+// STUB — replace with Person 3's real save helper
+async function saveNewVersion(spec, meta) {
+  console.log('[STUB] saveNewVersion called');
+  return { environmentId: 'stub-env-id', versionId: 'stub-version-id' };
+}
+```
+
+### Person 2 (frontend) — things you give them
+
+- `POST /api/v1/environments/generate` endpoint running on `http://localhost:3001`, CORS open
+- Response shape: `{ environmentId, versionId, spec, provider, warnings }`
+- `demo-scenes/warehouse.json` — the hardcoded sample spec to use before the real API lands
+- The Gemini embedding endpoint they can optionally call for "find similar" UI (Point them at Person 3's endpoint for that)
+
+### Person 4 (integration/deployment) — things you give them
+
+- `.env.example` with all required keys
+- `GEMINI_API_KEY`, `OPENROUTER_API_KEY` usage docs so they can configure Vercel/Render env vars
+- The `/api/v1/environments/generate` endpoint that Person 4 will wire into the photo upload flow
+
+---
+
+## Hackathon build order
+
+```
+0 – 20 min    Coordinate with Person 3: agree export paths, collection names,
+              save helper signature. Get warehouse.json demo scene done.
+
+20 – 60 min   LLM layer: interface.ts, gemini.ts, openrouter.ts, prompts.ts
+              Test Gemini directly with a hardcoded prompt before wiring anything.
+
+60 – 90 min   router.ts: repair loop. Test with a deliberately bad spec —
+              inject an out-of-bounds object and confirm the loop triggers.
+
+90 – 120 min  generate route: cache, embedding, vector search (stub if Person 3
+              isn't done), generateWithRepair call, save stub.
+
+120 – 150 min Wire in Person 3's real save helper once they land it.
+              Run the full curl smoke test (see Done criteria).
+
+150 – 180 min Cache test (same prompt twice), fallback test (remove Gemini key),
+              demo-scenes seeding, env vars, CORS.
+```
 
 ---
 
 ## Done criteria
 
-- [ ] `curl -X POST localhost:3001/api/v1/environments/generate -H 'Content-Type: application/json' -d '{"prompt":"warehouse 30x40m with 3 shelf aisles"}'` returns a valid spec JSON
-- [ ] The spec passes `EnvironmentSpecSchema.safeParse()` without errors
-- [ ] Out-of-bounds objects trigger the repair loop (visible in logs)
-- [ ] Gemini 429 falls through to OpenRouter and still returns a spec
-- [ ] Same prompt twice returns the cached result (no second LLM call in logs)
-- [ ] Spec saved to MongoDB and retrievable by `environmentId`
+- [ ] `curl -X POST localhost:3001/api/v1/environments/generate -H 'Content-Type: application/json' -d '{"prompt":"warehouse 30x40m with 3 shelf aisles"}'` returns 200 with a valid spec JSON
+- [ ] The spec passes Person 3's `validate(spec)` with no errors
+- [ ] A prompt that causes the LLM to generate out-of-bounds objects triggers the repair loop (visible in server logs)
+- [ ] Removing `GEMINI_API_KEY` from env causes the request to fall through to OpenRouter and still return a valid spec
+- [ ] Same prompt sent twice returns the second response from cache (no second LLM call in logs)
+- [ ] Spec is saved to Person 3's `environment_versions` collection and retrievable by `environmentId`
+- [ ] Response includes CORS headers so Person 2's frontend on `:5173` can call it

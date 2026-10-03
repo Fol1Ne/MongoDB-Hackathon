@@ -1,8 +1,24 @@
 {
-  "name": "@twin/api", "version": "0.1.0", "type": "module", "main": "src/index.ts",
-  "scripts": { "dev": "tsx watch src/server.ts", "start": "tsx src/server.ts", "db:init": "tsx src/db/init.ts" },
+  "name": "@twin/api",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "db:init": "tsx src/db/init.ts",
+    "db:vector": "tsx src/db/vector.ts",
+    "db:seed": "tsx src/db/seed.ts",
+    "smoke": "tsx src/db/smoke.ts"
+  },
   "dependencies": {
-    "@twin/schema": "*", "@twin/catalogue": "*", "@twin/validator": "*",
-    "fastify": "^5.0.0", "mongodb": "^6.9.0", "zod": "^3.23.8"
+    "@twin/schema": "*",
+    "@twin/catalogue": "*",
+    "@twin/validator": "*",
+    "@google/generative-ai": "^0.21.0",
+    "axios": "^1.7.7",
+    "fastify": "^5.0.0",
+    "mongodb": "^6.9.0",
+    "zod": "^3.23.8"
   }
 }

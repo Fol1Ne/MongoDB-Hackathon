@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0.0",
+  "environment": {
+    "name": "Outdoor Logistics Yard",
+    "type": "outdoor",
+    "dimensions": { "width": 80, "length": 100, "height": 15 }
+  },
+  "terrain": {
+    "type": "asphalt",
+    "properties": { "friction": 0.7, "restitution": 0.03 },
+    "heightmap": null
+  },
+  "objects": [
+    { "id": "crate_001",   "type": "crate",         "position": [-30, 0, -40], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": 50 },   "tags": ["cargo"] },
+    { "id": "crate_002",   "type": "crate",         "position": [-25, 0, -40], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": 50 },   "tags": ["cargo"] },
+    { "id": "crate_003",   "type": "crate",         "position": [-20, 0, -40], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": 50 },   "tags": ["cargo"] },
+    { "id": "crate_004",   "type": "crate",         "position": [-15, 0, -40], "rotation": [0, 0, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": 50 },   "tags": ["cargo"] },
+    { "id": "barrier_001", "type": "barrier",       "position": [-35, 0, 0],   "rotation": [0, 1.5708, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["safety"] },
+    { "id": "barrier_002", "type": "barrier",       "position": [35, 0, 0],    "rotation": [0, 1.5708, 0], "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["safety"] },
+    { "id": "barrier_003", "type": "barrier",       "position": [0, 0, -45],   "rotation": [0, 0, 0],     "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["safety"] },
+    { "id": "dock_001",    "type": "loading_dock",  "position": [30, 0, 40],   "rotation": [0, 0, 0],     "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["logistics"] },
+    { "id": "dock_002",    "type": "loading_dock",  "position": [20, 0, 40],   "rotation": [0, 0, 0],     "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["logistics"] },
+    { "id": "charge_001",  "type": "charging_station", "position": [0, 0, 40], "rotation": [0, 0, 0],     "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["robot"] },
+    { "id": "charge_002",  "type": "charging_station", "position": [-5, 0, 40],"rotation": [0, 0, 0],     "scale": [1, 1, 1], "physics": { "static": true, "mass": null }, "tags": ["robot"] }
+  ],
+  "lighting": { "preset": "outdoor_daylight", "intensity": 1.5 },
+  "navigation": {
+    "waypoints": [
+      { "id": "wp_gate",    "position": [0, 0, -47] },
+      { "id": "wp_staging", "position": [0, 0, -20] },
+      { "id": "wp_dock_a",  "position": [28, 0, 38] },
+      { "id": "wp_dock_b",  "position": [18, 0, 38] },
+      { "id": "wp_charge",  "position": [0, 0, 38] }
+    ]
+  },
+  "robotics": { "simulation_enabled": true },
+  "provenance": {
+    "source": "text",
+    "prompt": "An outdoor logistics yard with cargo crates, safety barriers, two loading docks, and robot charging stations",
+    "model": "demo",
+    "generatedAt": "2026-10-03T00:00:00Z",
+    "confidence": null
+  }
+}

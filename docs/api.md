@@ -15,8 +15,11 @@ Base URL: `/api/v1` · JSON in/out · no auth yet. Frontend never needs MongoDB 
 | 404 | `NOT_FOUND` | unknown environment/version/route |
 | 409 | `VERSION_CONFLICT` | `baseVersion` is stale, or concurrent write |
 | 409 | `ALREADY_AT_VERSION` | revert target is already the head |
+| 503 | `SEARCH_UNAVAILABLE` | vector search isn't available (local DB, index still building, embedding rate limit) |
 
-Validation codes: `SCHEMA_INVALID UNKNOWN_ASSET_TYPE DUPLICATE_OBJECT_ID DUPLICATE_WAYPOINT_ID OUT_OF_BOUNDS OVERLAP INVALID_SCALE INVALID_DIMENSIONS INVALID_FRICTION INVALID_RESTITUTION INVALID_MASS` (+ warning-only `WAYPOINT_IN_OBSTACLE`, and `OVERLAP` when an object is dynamic).
+Validation codes: `SCHEMA_INVALID UNKNOWN_ASSET_TYPE DUPLICATE_OBJECT_ID DUPLICATE_WAYPOINT_ID OUT_OF_BOUNDS OVERLAP INVALID_SCALE INVALID_DIMENSIONS INVALID_FRICTION INVALID_RESTITUTION INVALID_MASS` (+ warning-only `WAYPOINT_IN_OBSTACLE`, `SUSPICIOUS_ROTATION` (an angle beyond ±2π, i.e. probably degrees), and `OVERLAP` when an object is dynamic).
+
+Ids (objects and waypoints) match `^[A-Za-z_][A-Za-z0-9_]{0,63}$`: they become USD prim names, so `-`, `.` and a leading digit are rejected.
 
 Geometry conventions: origin at environment centre on the ground; X ∈ [-width/2, width/2], Z ∈ [-length/2, length/2], Y ∈ [0, height]. `position` = centre of the footprint (y = base). Footprint = catalogue `[X, Z]` × `scale[0]`, `scale[2]` (yaw-expanded AABB). Objects without `physics` count as static. Static–static footprint overlap (with overlapping vertical span, so stacking is allowed) is an **error**.
 
@@ -55,6 +58,23 @@ Query: `order=asc|desc` (default `asc`: v1, v2, …), `limit`, `offset`
 Body: `{ "toVersion": 1, "changeNote"?: string, "baseVersion"?: number }`
 Creates a NEW version (copy of `toVersion`'s spec, `parentVersionId` = current head, `revertedFromVersion` = `toVersion`). History is never deleted. → **201** `{ environment, version, warnings }`
 
+## GET /environments/similar: find similar environments (Atlas Vector Search)
+Query: `text` (3–500 chars) **or** `environmentId`, plus optional `type` and `limit` (1–20, default 5).
+- With `environmentId`, the query is that environment's head summary, and the environment itself is excluded.
+
+→ `{ "items": [ { "environmentId", "versionId", "version", "name", "type", "summaryText", "score" } ] }`
+- Each item is the **current head** of a matching environment, highest score first. Older versions never appear.
+- Hits carry no `spec`; fetch it with `GET /environments/:id`.
+
+Atlas embeds `summaryText` and the query text itself (Automated Embedding), so there are no vectors or embedding keys in the app.
+- **Setup:** run `npm run db:vector` once (see `infra/mongo/README.md`).
+- **503 `SEARCH_UNAVAILABLE`** is returned when search isn't available. `details[0].reason` says why:
+  - a local mongod without Atlas Search;
+  - the index is missing or still building;
+  - Atlas's embedding rate limit.
+  Saves are unaffected. Any other database error is a 500.
+- **LLM few-shot examples:** use this endpoint, or `repo.similar()`, rather than embedding with another provider and adding a second index. M0 allows 3 search indexes, and every query counts toward M0's limit of 3 query embeddings per minute when the Atlas organization has no payment method.
+
 ## Helpers
 - `POST /environments/validate` body `{ "spec": ... }` → `{ valid, errors[], warnings[] }`. Writes nothing; use for live editor feedback and the LLM repair loop.
 - `GET /assets/catalogue` → `{ "assets": [ { type, name, footprint, height, collision, tags, usdAsset } ] }`
@@ -67,3 +87,6 @@ Creates a NEW version (copy of `toVersion`'s spec, `parentVersionId` = current h
   - Use a current model. `gemini-1.5-flash` and the `@google/generative-ai` SDK are retired; as of Oct 2026 the free tier gets about 500 requests/day on `gemini-3.5-flash-lite`.
 - Viewer: `GET /environments/:id` → `version.spec`.
 - Catalogue for prompts: `ASSET_CATALOGUE` from `@twin/catalogue`.
+- Demo scenes: `apps/api/demo-scenes/{warehouse,factory,office,outdoor}.json` are valid specs, with zero errors and zero warnings.
+  - Use them as few-shot examples, as an offline demo fallback, or as viewer test data.
+  - `npm run db:seed` loads them into MongoDB.
