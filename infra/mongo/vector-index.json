@@ -1,0 +1,11 @@
+{
+  "name": "env_summary_autoembed",
+  "type": "vectorSearch",
+  "definition": {
+    "fields": [
+      { "type": "autoEmbed", "modality": "text", "path": "summaryText", "model": "voyage-4-lite" },
+      { "type": "filter", "path": "spec.environment.type" },
+      { "type": "filter", "path": "environmentId" }
+    ]
+  }
+}
