@@ -12,10 +12,10 @@ function extractJson(text: string): string {
 }
 
 export class OpenRouterProvider implements LLMProvider {
-  name = "openrouter-llama3-8b";
+  name = "openrouter-qwen3.8-27b";
 
   private baseURL = "https://openrouter.ai/api/v1";
-  private model = "meta-llama/llama-3.1-8b-instruct:free";
+  private model = "qwen/qwen3.8-27b:free";
 
   async generateStructured<T>(req: LLMRequest): Promise<LLMResponse<T>> {
     const apiKey = process.env["OPENROUTER_API_KEY"];
@@ -51,7 +51,8 @@ export class OpenRouterProvider implements LLMProvider {
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         const status = err.response?.status;
-        if (status === 429 || (status !== undefined && status >= 500)) {
+        // 404 covers a retired/renamed free-tier model id — OpenRouter's free lineup rotates often.
+        if (status === 429 || status === 404 || (status !== undefined && status >= 500)) {
           throw new RetryableError(`OpenRouter HTTP ${status}`);
         }
         if (err.code === "ECONNABORTED" || err.code === "ETIMEDOUT") {

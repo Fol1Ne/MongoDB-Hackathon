@@ -67,7 +67,7 @@ function buildGeminiSchema(jsonSchema: Record<string, unknown>): FunctionDeclara
 }
 
 export class GeminiProvider implements LLMProvider {
-  name = "gemini-1.5-flash";
+  name = "gemini-flash-latest";
 
   private genAI?: GoogleGenerativeAI;
 
@@ -80,7 +80,7 @@ export class GeminiProvider implements LLMProvider {
 
   async generateStructured<T>(req: LLMRequest): Promise<LLMResponse<T>> {
     const model = this.client().getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-flash-latest',
       generationConfig: {
         temperature: req.temperature ?? 0.3,
         responseMimeType: 'application/json',
@@ -99,6 +99,10 @@ export class GeminiProvider implements LLMProvider {
       }
       if (errMsg.includes("500") || errMsg.includes("503") || errMsg.includes("UNAVAILABLE")) {
         throw new RetryableError(`Gemini server error: ${errMsg}`);
+      }
+      // 404 covers a retired/renamed model id — fall through to the next provider rather than hard-failing the request.
+      if (errMsg.includes("404") || errMsg.includes("not found")) {
+        throw new RetryableError(`Gemini model unavailable: ${errMsg}`);
       }
       throw err;
     }
@@ -121,7 +125,7 @@ export function createGeminiEmbedding(text: string): Promise<number[]> {
   if (!apiKey) throw new Error("GEMINI_API_KEY is not set");
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
+  const model = genAI.getGenerativeModel({ model: "gemini-embedding-001" });
 
   return model.embedContent(text).then((res) => res.embedding.values);
 }

@@ -4,12 +4,12 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "start": "tsx src/server.ts",
-    "db:init": "tsx src/db/init.ts",
-    "db:vector": "tsx src/db/vector.ts",
-    "db:seed": "tsx src/db/seed.ts",
-    "smoke": "tsx src/db/smoke.ts"
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "start": "tsx --env-file=.env src/server.ts",
+    "db:init": "tsx --env-file=.env src/db/init.ts",
+    "db:vector": "tsx --env-file=.env src/db/vector.ts",
+    "db:seed": "tsx --env-file=.env src/db/seed.ts",
+    "smoke": "tsx --env-file=.env src/db/smoke.ts"
   },
   "dependencies": {
     "@twin/schema": "*",

@@ -72,29 +72,38 @@ export async function registerGenerateRoutes(app: FastifyInstance, repo: Environ
     }
     const { prompt, projectId, ownerId, tags } = parsed.data;
 
-    // Cache check
+    // Cache check — still persist a new environment so the UI always gets an id to open.
     const key = cacheKey(prompt);
     const hit = getCached(key);
+    let spec: EnvironmentSpec;
+    let provider: string;
+    let warnings: unknown[] = [];
+    let repairAttempts = 0;
+    let cached = false;
+
     if (hit) {
-      return reply.send({ environmentId: null, versionId: null, spec: hit.spec, provider: hit.provider, warnings: [], repairAttempts: 0, cached: true });
-    }
+      spec = hit.spec;
+      provider = hit.provider;
+      cached = true;
+    } else {
+      // Few-shot examples from vector search or demo scenes
+      const examples = await findExamples(repo, prompt);
 
-    // Few-shot examples from vector search or demo scenes
-    const examples = await findExamples(repo, prompt);
-
-    // Generate + repair loop (throws AppError-compatible object on PROVIDER_UNAVAILABLE)
-    let generationResult;
-    try {
-      generationResult = await generateWithRepair(prompt, examples);
-    } catch (err: unknown) {
-      const e = err as { code?: string; message?: string };
-      if (e.code === "PROVIDER_UNAVAILABLE") {
-        return reply.status(503).send({ error: { code: "PROVIDER_UNAVAILABLE", message: e.message ?? "All LLM providers failed", details: [] } });
+      // Generate + repair loop (throws AppError-compatible object on PROVIDER_UNAVAILABLE)
+      let generationResult;
+      try {
+        generationResult = await generateWithRepair(prompt, examples);
+      } catch (err: unknown) {
+        const e = err as { code?: string; message?: string };
+        if (e.code === "PROVIDER_UNAVAILABLE") {
+          return reply.status(503).send({ error: { code: "PROVIDER_UNAVAILABLE", message: e.message ?? "All LLM providers failed", details: [] } });
+        }
+        throw err;
       }
-      throw err;
-    }
 
-    const { spec, provider, warnings, repairAttempts } = generationResult;
+      ({ spec, provider, warnings, repairAttempts } = generationResult);
+      setCached(key, spec, provider);
+    }
 
     // Persist using Person 3's repo (spec is already validated inside generateWithRepair)
     const { environment, version } = await repo.create(spec, {
@@ -104,8 +113,6 @@ export async function registerGenerateRoutes(app: FastifyInstance, repo: Environ
       ...(ownerId && ObjectId.isValid(ownerId) ? { ownerId: new ObjectId(ownerId) } : {}),
     });
 
-    setCached(key, spec, provider);
-
     return reply.status(201).send({
       environmentId: String(environment._id),
       versionId: String(version._id),
@@ -114,7 +121,7 @@ export async function registerGenerateRoutes(app: FastifyInstance, repo: Environ
       provider,
       warnings,
       repairAttempts,
-      cached: false,
+      cached,
     });
   });
 }
