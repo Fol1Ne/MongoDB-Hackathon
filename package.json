@@ -2,9 +2,12 @@
   "name": "twin-data-layer",
   "private": true,
   "type": "module",
-  "workspaces": ["packages/*", "apps/*"],
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && npm run typecheck -w @twin/web",
     "test": "vitest run",
     "test:unit": "vitest run packages",
     "test:api": "vitest run apps/api",
@@ -12,7 +15,9 @@
     "db:init": "npm run db:init -w @twin/api",
     "db:vector": "npm run db:vector -w @twin/api",
     "db:seed": "npm run db:seed -w @twin/api",
-    "smoke": "npm run smoke -w @twin/api"
+    "smoke": "npm run smoke -w @twin/api",
+    "dev:web": "npm run dev -w @twin/web",
+    "build:web": "npm run build -w @twin/web"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

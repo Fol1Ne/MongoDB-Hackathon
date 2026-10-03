@@ -1,0 +1,5178 @@
+{
+  "schemaVersion": "1.0.0",
+  "environment": {
+    "name": "Warehouse Environment",
+    "type": "warehouse",
+    "dimensions": {
+      "width": 50,
+      "length": 80,
+      "height": 12
+    }
+  },
+  "terrain": {
+    "type": "concrete",
+    "properties": {
+      "friction": 0.8,
+      "restitution": 0.05
+    },
+    "heightmap": null
+  },
+  "objects": [
+    {
+      "id": "industrial_shelf_001",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_002",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_003",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_004",
+      "type": "industrial_shelf",
+      "position": [
+        62,
+        0,
+        5
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_005",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_006",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_007",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_008",
+      "type": "robotic_shelf_v9",
+      "position": [
+        -21.35,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_009",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_010",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_011",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_012",
+      "type": "industrial_shelf",
+      "position": [
+        -21.35,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_013",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_014",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_015",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_016",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_017",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_018",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_019",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_020",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_021",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_022",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_023",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_024",
+      "type": "industrial_shelf",
+      "position": [
+        -20.65,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_025",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_026",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_027",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_028",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_029",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_030",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_031",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_032",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_033",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_034",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_035",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_036",
+      "type": "industrial_shelf",
+      "position": [
+        -15.85,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_037",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_038",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_039",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_040",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_041",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_042",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_043",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_044",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_045",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_046",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_047",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_048",
+      "type": "industrial_shelf",
+      "position": [
+        -15.15,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_049",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_050",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_051",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_052",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_053",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_054",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_055",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_056",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_057",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_058",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_059",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_060",
+      "type": "industrial_shelf",
+      "position": [
+        -10.35,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_061",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_062",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_063",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_064",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_065",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_066",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_067",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_068",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_069",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_070",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_071",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_072",
+      "type": "industrial_shelf",
+      "position": [
+        -9.65,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_073",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_074",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_075",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_076",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_077",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_078",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_079",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_080",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_081",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_082",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_083",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_084",
+      "type": "industrial_shelf",
+      "position": [
+        -4.85,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_085",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_086",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_087",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_088",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_089",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_090",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_091",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_092",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_093",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_094",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_095",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_096",
+      "type": "industrial_shelf",
+      "position": [
+        -4.15,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_097",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_098",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_099",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_100",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_101",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_102",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_103",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_104",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_105",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_106",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_107",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_108",
+      "type": "industrial_shelf",
+      "position": [
+        0.65,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_109",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_110",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_111",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_112",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_113",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_114",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_115",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_116",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_117",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_118",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_119",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_120",
+      "type": "industrial_shelf",
+      "position": [
+        1.35,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_121",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_122",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_123",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_124",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_125",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_126",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_127",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_128",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_129",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_130",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_131",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_132",
+      "type": "industrial_shelf",
+      "position": [
+        6.15,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_133",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        -34.15
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_134",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        -30.449999999999996
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_135",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        -26.75
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_136",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        -23.049999999999997
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_137",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        -19.349999999999998
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_138",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        -15.65
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_139",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        -7.950000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_140",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        -4.25
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_141",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        -0.5500000000000003
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_142",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        3.150000000000001
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_143",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        6.85
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "industrial_shelf_144",
+      "type": "industrial_shelf",
+      "position": [
+        6.85,
+        0,
+        10.549999999999999
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        3,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "storage_rack_001",
+      "type": "storage_rack",
+      "position": [
+        -20,
+        0,
+        -39.2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "storage_rack_002",
+      "type": "storage_rack",
+      "position": [
+        -17.3,
+        0,
+        -39.2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "storage_rack_003",
+      "type": "storage_rack",
+      "position": [
+        -14.6,
+        0,
+        -39.2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "storage_rack_004",
+      "type": "storage_rack",
+      "position": [
+        -11.899999999999999,
+        0,
+        -39.2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "storage_rack_005",
+      "type": "storage_rack",
+      "position": [
+        -9.2,
+        0,
+        -39.2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "storage_rack_006",
+      "type": "storage_rack",
+      "position": [
+        -6.5,
+        0,
+        -39.2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "warehouse_column_001",
+      "type": "warehouse_column",
+      "position": [
+        -24.7,
+        0,
+        -30
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "warehouse_column_002",
+      "type": "warehouse_column",
+      "position": [
+        -24.7,
+        0,
+        -10
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "warehouse_column_003",
+      "type": "warehouse_column",
+      "position": [
+        -24.7,
+        0,
+        10
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "warehouse_column_004",
+      "type": "warehouse_column",
+      "position": [
+        -24.7,
+        0,
+        30
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "warehouse_column_005",
+      "type": "warehouse_column",
+      "position": [
+        24.7,
+        0,
+        -30
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "warehouse_column_006",
+      "type": "warehouse_column",
+      "position": [
+        24.7,
+        0,
+        -10
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "warehouse_column_007",
+      "type": "warehouse_column",
+      "position": [
+        24.7,
+        0,
+        10
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "warehouse_column_008",
+      "type": "warehouse_column",
+      "position": [
+        24.7,
+        0,
+        30
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "forklift_001",
+      "type": "forklift",
+      "position": [
+        -12.75,
+        0,
+        20
+      ],
+      "rotation": [
+        0,
+        0.3,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": false,
+        "mass": 2500
+      }
+    },
+    {
+      "id": "forklift_002",
+      "type": "forklift",
+      "position": [
+        3.75,
+        0,
+        24
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": false,
+        "mass": 2500
+      }
+    },
+    {
+      "id": "forklift_003",
+      "type": "forklift",
+      "position": [
+        17,
+        0,
+        14
+      ],
+      "rotation": [
+        0,
+        0.8,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": false,
+        "mass": 2500
+      }
+    },
+    {
+      "id": "loading_dock_001",
+      "type": "loading_dock",
+      "position": [
+        -15,
+        0,
+        37.5
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "loading_dock_002",
+      "type": "loading_dock",
+      "position": [
+        -5,
+        0,
+        37.5
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "loading_dock_003",
+      "type": "loading_dock",
+      "position": [
+        5,
+        0,
+        37.5
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "loading_dock_004",
+      "type": "loading_dock",
+      "position": [
+        15,
+        0,
+        37.5
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "barrier_001",
+      "type": "barrier",
+      "position": [
+        -15,
+        0,
+        34.6
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "barrier_002",
+      "type": "barrier",
+      "position": [
+        -5,
+        0,
+        34.6
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "barrier_003",
+      "type": "barrier",
+      "position": [
+        5,
+        0,
+        34.6
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "barrier_004",
+      "type": "barrier",
+      "position": [
+        15,
+        0,
+        34.6
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_001",
+      "type": "pallet",
+      "position": [
+        -16,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "box_001",
+      "type": "box",
+      "position": [
+        -16,
+        0.15,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_002",
+      "type": "pallet",
+      "position": [
+        -12,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_003",
+      "type": "pallet",
+      "position": [
+        -8,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "crate_001",
+      "type": "crate",
+      "position": [
+        -8,
+        0.15,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_004",
+      "type": "pallet",
+      "position": [
+        -4,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "box_002",
+      "type": "box",
+      "position": [
+        -4,
+        0.15,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_005",
+      "type": "pallet",
+      "position": [
+        0,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_006",
+      "type": "pallet",
+      "position": [
+        4,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "crate_002",
+      "type": "crate",
+      "position": [
+        4,
+        0.15,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_007",
+      "type": "pallet",
+      "position": [
+        8,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "box_003",
+      "type": "box",
+      "position": [
+        8,
+        0.15,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_008",
+      "type": "pallet",
+      "position": [
+        12,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_009",
+      "type": "pallet",
+      "position": [
+        16,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "crate_003",
+      "type": "crate",
+      "position": [
+        16,
+        0.15,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_010",
+      "type": "pallet",
+      "position": [
+        -16,
+        0,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "box_004",
+      "type": "box",
+      "position": [
+        -16,
+        0.15,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_011",
+      "type": "pallet",
+      "position": [
+        -12,
+        0,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_012",
+      "type": "pallet",
+      "position": [
+        -8,
+        0,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "crate_004",
+      "type": "crate",
+      "position": [
+        -8,
+        0.15,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_013",
+      "type": "pallet",
+      "position": [
+        -4,
+        0,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "box_005",
+      "type": "box",
+      "position": [
+        -4,
+        0.15,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_014",
+      "type": "pallet",
+      "position": [
+        0,
+        0,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_015",
+      "type": "pallet",
+      "position": [
+        4,
+        0,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "crate_005",
+      "type": "crate",
+      "position": [
+        4,
+        0.15,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_016",
+      "type": "pallet",
+      "position": [
+        8,
+        0,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "box_006",
+      "type": "box",
+      "position": [
+        8,
+        0.15,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_017",
+      "type": "pallet",
+      "position": [
+        12,
+        0,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "pallet_018",
+      "type": "pallet",
+      "position": [
+        16,
+        0,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "crate_006",
+      "type": "crate",
+      "position": [
+        16,
+        0.15,
+        31
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "conveyor_001",
+      "type": "conveyor",
+      "position": [
+        14,
+        0,
+        -30
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "conveyor_002",
+      "type": "conveyor",
+      "position": [
+        14,
+        0,
+        -27
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "conveyor_003",
+      "type": "conveyor",
+      "position": [
+        14,
+        0,
+        -24
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "conveyor_004",
+      "type": "conveyor",
+      "position": [
+        14,
+        0,
+        -21
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "conveyor_005",
+      "type": "conveyor",
+      "position": [
+        18.5,
+        0,
+        -30
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "conveyor_006",
+      "type": "conveyor",
+      "position": [
+        18.5,
+        0,
+        -27
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "conveyor_007",
+      "type": "conveyor",
+      "position": [
+        18.5,
+        0,
+        -24
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "conveyor_008",
+      "type": "conveyor",
+      "position": [
+        18.5,
+        0,
+        -21
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "workbench_001",
+      "type": "workbench",
+      "position": [
+        21.4,
+        0,
+        -4
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "workbench_002",
+      "type": "workbench",
+      "position": [
+        21.4,
+        0,
+        -1.5
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "workbench_003",
+      "type": "workbench",
+      "position": [
+        21.4,
+        0,
+        1
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "workbench_004",
+      "type": "workbench",
+      "position": [
+        21.4,
+        0,
+        3.5
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "charging_station_001",
+      "type": "charging_station",
+      "position": [
+        22.5,
+        0,
+        -36
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "charging_station_002",
+      "type": "charging_station",
+      "position": [
+        22.5,
+        0,
+        -34
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "wall_001",
+      "type": "wall",
+      "position": [
+        14,
+        0,
+        16
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "wall_002",
+      "type": "wall",
+      "position": [
+        18,
+        0,
+        16
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "wall_003",
+      "type": "wall",
+      "position": [
+        22,
+        0,
+        16
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "table_001",
+      "type": "table",
+      "position": [
+        20,
+        0,
+        25
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "table_002",
+      "type": "table",
+      "position": [
+        20,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "chair_001",
+      "type": "chair",
+      "position": [
+        18.9,
+        0,
+        25
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "chair_002",
+      "type": "chair",
+      "position": [
+        21.1,
+        0,
+        25
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "chair_003",
+      "type": "chair",
+      "position": [
+        18.9,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    },
+    {
+      "id": "chair_004",
+      "type": "chair",
+      "position": [
+        21.1,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "physics": {
+        "static": true,
+        "mass": null
+      }
+    }
+  ],
+  "lighting": {
+    "preset": "warehouse_overhead",
+    "intensity": 1
+  },
+  "navigation": {
+    "waypoints": [
+      {
+        "id": "wp_start",
+        "position": [
+          3.75,
+          0,
+          -37
+        ]
+      },
+      {
+        "id": "wp_cross",
+        "position": [
+          3.75,
+          0,
+          -11.8
+        ]
+      },
+      {
+        "id": "wp_lane",
+        "position": [
+          -18.25,
+          0,
+          -11.8
+        ]
+      },
+      {
+        "id": "wp_dock",
+        "position": [
+          -18.25,
+          0,
+          33.5
+        ]
+      }
+    ]
+  },
+  "robotics": {
+    "simulation_enabled": true
+  },
+  "provenance": {
+    "source": "text",
+    "prompt": "A 50 by 80 metre warehouse with six shelf aisles and a loading dock.",
+    "model": "gemini-1.5-flash",
+    "generatedAt": "2026-10-03T12:00:00Z",
+    "confidence": null
+  }
+}
