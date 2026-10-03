@@ -61,5 +61,9 @@ Creates a NEW version (copy of `toVersion`'s spec, `parentVersionId` = current h
 
 ## For teammates
 - LLM/generation code: call `validateAndParse(raw)` from `@twin/validator` (or `/validate`), then `POST /environments`. Never write to Mongo directly.
+- **Structured output:** pass `toLlmJsonSchema({ objectTypes: ASSET_TYPES })` from `@twin/schema` as Gemini's `responseJsonSchema`, using `@google/genai` with `responseMimeType: "application/json"`.
+  - It omits `provenance`; set that on the server.
+  - Don't pass `zod-to-json-schema` output directly. It turns the `[x, y, z]` tuples into array-form `items`, which Gemini doesn't handle reliably.
+  - Use a current model. `gemini-1.5-flash` and the `@google/generative-ai` SDK are retired; as of Oct 2026 the free tier gets about 500 requests/day on `gemini-3.5-flash-lite`.
 - Viewer: `GET /environments/:id` → `version.spec`.
 - Catalogue for prompts: `ASSET_CATALOGUE` from `@twin/catalogue`.
