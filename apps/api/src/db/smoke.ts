@@ -27,12 +27,13 @@ const check = (label: string, ok: boolean, detail?: unknown) => {
 const spec = structuredClone(loadDemoScenes().find((s) => s.file === "office.json")!.spec) as any;
 spec.environment.name = `Smoke test ${Date.now()}`;
 let id: string | undefined;
+const probeId = new ObjectId(); // the $jsonSchema probe document, removed in finally if it was ever written
 try {
   const created = await call("POST", "/environments", { spec, changeNote: "smoke" });
   id = created.body.environment?.id;
   check("create → 201 (multi-document transaction)", created.status === 201, created.body);
 
-  spec.objects[0].position = [-3, 0, -4];
+  spec.environment.name += " (edited)"; // layout-independent edit
   const saved = await call("PUT", `/environments/${id}`, { spec, baseVersion: 1 });
   check("edit → v2", saved.body.version?.version === 2, saved.body);
 
@@ -51,14 +52,16 @@ try {
   check("history is v1, v2, v3", JSON.stringify(history.body.items?.map((v: any) => v.version)) === "[1,2,3]", history.body);
 
   const direct = await db.collection("environment_versions")
-    .insertOne({ environmentId: new ObjectId(), version: 1, schemaVersion: "1.0.0", spec: { objects: "nope" }, createdAt: new Date() })
+    .insertOne({ _id: probeId, environmentId: new ObjectId(), version: 1, schemaVersion: "1.0.0", spec: { objects: "nope" }, createdAt: new Date() })
     .then(() => "inserted", (e: { code?: number }) => e.code);
   check("$jsonSchema rejects a malformed version written directly (121)", direct === 121, direct);
 
   const similar = await call("GET", `/environments/similar?text=${encodeURIComponent("warehouse with shelf aisles and a loading dock")}`);
   if (similar.status === 200) check("similar → a warehouse ranks first", similar.body.items?.[0]?.type === "warehouse", similar.body);
-  else console.log(`- similar: skipped (HTTP ${similar.status}; needs the vector search endpoint and npm run db:vector)`);
+  else if (similar.status === 400 || similar.status === 404) console.log("- similar: skipped (no /environments/similar endpoint on this branch)");
+  else check(`similar → HTTP ${similar.status} ${similar.body.error?.code ?? ""}`, false, similar.body.error?.details ?? similar.body);
 } finally {
+  await db.collection("environment_versions").deleteOne({ _id: probeId });
   if (id) {
     await db.collection("environment_versions").deleteMany({ environmentId: new ObjectId(id) });
     await db.collection("environments").deleteOne({ _id: new ObjectId(id) });
