@@ -1,0 +1,21 @@
+{
+  "name": "twin-data-layer",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run packages",
+    "test:api": "vitest run apps/api",
+    "dev": "npm run dev -w @twin/api",
+    "db:init": "npm run db:init -w @twin/api"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "mongodb-memory-server": "^10.1.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
