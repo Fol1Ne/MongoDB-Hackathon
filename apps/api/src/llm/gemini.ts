@@ -69,16 +69,17 @@ function buildGeminiSchema(jsonSchema: Record<string, unknown>): FunctionDeclara
 export class GeminiProvider implements LLMProvider {
   name = "gemini-1.5-flash";
 
-  private genAI: GoogleGenerativeAI;
+  private genAI?: GoogleGenerativeAI;
 
-  constructor() {
+  /** The key is checked per request (like OpenRouterProvider), so the API boots and its tests run without LLM keys. */
+  private client(): GoogleGenerativeAI {
     const apiKey = process.env["GEMINI_API_KEY"];
-    if (!apiKey) throw new Error("GEMINI_API_KEY is not set");
-    this.genAI = new GoogleGenerativeAI(apiKey);
+    if (!apiKey) throw new RetryableError("GEMINI_API_KEY not set — skipping Gemini");
+    return (this.genAI ??= new GoogleGenerativeAI(apiKey));
   }
 
   async generateStructured<T>(req: LLMRequest): Promise<LLMResponse<T>> {
-    const model = this.genAI.getGenerativeModel({
+    const model = this.client().getGenerativeModel({
       model: 'gemini-1.5-flash',
       generationConfig: {
         temperature: req.temperature ?? 0.3,
