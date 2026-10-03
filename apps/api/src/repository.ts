@@ -1,6 +1,21 @@
-import { Int32, ObjectId, type Collection, type Db, type MongoClient } from "mongodb";
+import { Int32, MongoServerError, ObjectId, type Collection, type Db, type MongoClient } from "mongodb";
 import type { EnvironmentSpec } from "@twin/schema";
 import { AppError, conflict, notFound } from "./errors";
+import { VECTOR_INDEX } from "./db/vectorIndex";
+import { buildSimilarPipeline, type SimilarHit, type SimilarQuery } from "./similar";
+
+/**
+ * Errors meaning "vector search isn't available here or right now" (a 503), as opposed to real bugs such as a
+ * malformed pipeline, which must surface as 500s: $vectorSearch outside Atlas (6047401), search not enabled
+ * (31082 SearchNotEnabled), and Atlas's embedding-provider rate limit (M0: 3 queries/min without a payment method).
+ */
+export function isSearchUnavailable(e: unknown): e is MongoServerError {
+  if (!(e instanceof MongoServerError)) return false;
+  return e.code === 6047401 || e.code === 31082 || e.codeName === "SearchNotEnabled" || /rate limit exceeded/i.test(e.message);
+}
+
+const searchUnavailable = (reason: string, codeName?: string) =>
+  new AppError(503, "SEARCH_UNAVAILABLE", "Vector search is not available right now", [{ reason, ...(codeName && { codeName }) }]);
 
 export interface EnvironmentDoc {
   _id: ObjectId;
@@ -141,6 +156,25 @@ export class EnvironmentRepository {
       this.environments.countDocuments(q),
     ]);
     return { items, total };
+  }
+
+  /** Atlas Vector Search; a 503 where it isn't available (local mongod, index missing or building, M0 rate limit). */
+  async similar(q: SimilarQuery): Promise<SimilarHit[]> {
+    let hits: SimilarHit[];
+    try {
+      hits = await this.versions.aggregate<SimilarHit>(buildSimilarPipeline(q)).toArray();
+    } catch (e) {
+      if (isSearchUnavailable(e)) throw searchUnavailable(e.message, e.codeName);
+      throw e;
+    }
+    if (hits.length === 0) {
+      // Atlas answers [] rather than an error while the index is missing or still building; don't pass that off
+      // as "nothing similar".
+      const name = q.index ?? VECTOR_INDEX;
+      const [index] = (await this.versions.listSearchIndexes(name).toArray()) as Array<{ status?: string; queryable?: boolean }>;
+      if (!index?.queryable) throw searchUnavailable(`Vector index '${name}' is ${index ? `not queryable yet (${index.status})` : "missing"}; run npm run db:vector`);
+    }
+    return hits;
   }
 
   private async runTx<T>(fn: (session: import("mongodb").ClientSession) => Promise<T>): Promise<T> {

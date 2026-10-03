@@ -3,9 +3,11 @@ import { ObjectId, type Db, type MongoClient } from "mongodb";
 import { z } from "zod";
 import { ASSET_CATALOGUE } from "@twin/catalogue";
 import { validateAndParse } from "@twin/validator";
-import type { EnvironmentSpec } from "@twin/schema";
+import { EnvironmentTypeSchema, type EnvironmentSpec } from "@twin/schema";
 import { AppError, badRequest, conflict, validationFailed } from "./errors";
 import { EnvironmentRepository, type EnvironmentDoc, type VersionDoc } from "./repository";
+import { registerGenerateRoutes } from "./generate";
+import type { SimilarHit } from "./similar";
 
 const oid = (v: string, what = "id") => {
   if (!ObjectId.isValid(v) || String(new ObjectId(v)) !== v.toLowerCase()) throw badRequest(`Invalid ${what}`);
@@ -21,6 +23,14 @@ const RevertBody = z.object({ toVersion: z.number().int().min(1), changeNote: no
 const Paging = z.object({ limit: z.coerce.number().int().min(1).max(500).default(100), offset: z.coerce.number().int().min(0).default(0) });
 const ListQuery = Paging.extend({ type: z.string().optional(), tag: z.string().optional(), ownerId: hex.optional(), projectId: hex.optional() });
 const VersionsQuery = Paging.extend({ order: z.enum(["asc", "desc"]).default("asc") });
+const SimilarQuery = z
+  .object({
+    text: z.string().min(3).max(500).optional(),
+    environmentId: hex.optional(),
+    type: EnvironmentTypeSchema.optional(),
+    limit: z.coerce.number().int().min(1).max(20).default(5),
+  })
+  .refine((q) => q.text !== undefined || q.environmentId !== undefined, "Provide text or environmentId");
 
 function parse<T>(schema: z.ZodType<T, z.ZodTypeDef, unknown>, data: unknown): T {
   const r = schema.safeParse(data ?? {});
@@ -47,6 +57,10 @@ const versionMeta = (v: Omit<VersionDoc, "spec"> & { spec?: EnvironmentSpec }) =
   createdAt: v.createdAt.toISOString(),
 });
 const versionDto = (v: VersionDoc) => ({ ...versionMeta(v), spec: v.spec });
+const similarDto = (h: SimilarHit) => ({
+  environmentId: String(h.environmentId), versionId: String(h._id), version: h.version,
+  name: h.name, type: h.type, summaryText: h.summaryText, score: h.score,
+});
 
 export function buildApp(deps: { client: MongoClient; db: Db }): FastifyInstance {
   const repo = new EnvironmentRepository(deps.client, deps.db);
@@ -69,6 +83,9 @@ export function buildApp(deps: { client: MongoClient; db: Db }): FastifyInstance
 
   app.register(async (api) => {
     api.get("/assets/catalogue", async () => ({ assets: ASSET_CATALOGUE }));
+
+    // LLM generation endpoint (Person 1)
+    await registerGenerateRoutes(api, repo);
 
     // Stateless validation for live editor feedback / LLM repair loop. Writes nothing.
     api.post("/environments/validate", async (req) => {
@@ -93,6 +110,15 @@ export function buildApp(deps: { client: MongoClient; db: Db }): FastifyInstance
         { limit: q.limit, offset: q.offset },
       );
       return { items: items.map(envDto), total, limit: q.limit, offset: q.offset };
+    });
+
+    // Find similar environments (PLAN.md §12.3): by text, or by an environment whose head summary becomes the query.
+    api.get("/environments/similar", async (req) => {
+      const q = parse(SimilarQuery, req.query);
+      const exclude = q.environmentId ? oid(q.environmentId) : undefined;
+      const text = q.text ?? (exclude ? (await repo.getHead(exclude)).version.summaryText : "");
+      const items = await repo.similar({ text, type: q.type, excludeEnvironmentId: exclude, limit: q.limit });
+      return { items: items.map(similarDto) };
     });
 
     api.get<{ Params: { id: string } }>("/environments/:id", async (req) => {
