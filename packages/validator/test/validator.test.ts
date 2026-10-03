@@ -157,3 +157,41 @@ describe("overlap", () => {
     expect(Date.now() - t).toBeLessThan(2000);
   });
 });
+
+describe("ids are USD prim names", () => {
+  it.each(["shelf-001", "shelf.001", "1shelf", "", "a".repeat(65)])("rejects object id %j", (id) => {
+    const spec = makeSpec();
+    spec.objects[0]!.id = id;
+    expect(codes(validateEnvironmentSpec(spec))).toContain("SCHEMA_INVALID");
+  });
+
+  it.each(["shelf_001", "_hidden", "A", "a".repeat(64)])("accepts object id %j", (id) => {
+    const spec = makeSpec();
+    spec.objects[0]!.id = id;
+    expect(validateEnvironmentSpec(spec).valid).toBe(true);
+  });
+
+  it("applies the same rule to waypoint ids", () => {
+    const spec = makeSpec();
+    spec.navigation!.waypoints[0]!.id = "wp-start";
+    expect(validateEnvironmentSpec(spec).errors)
+      .toContainEqual(expect.objectContaining({ path: "navigation.waypoints[0].id", code: "SCHEMA_INVALID" }));
+  });
+});
+
+describe("rotation sanity", () => {
+  it("warns (without rejecting) when an angle looks like degrees", () => {
+    const spec = makeSpec();
+    spec.objects[0]!.rotation = [0, 90, 0];
+    const r = validateEnvironmentSpec(spec);
+    expect(r.valid).toBe(true);
+    expect(r.warnings).toContainEqual(expect.objectContaining({ path: "objects[0].rotation", code: "SUSPICIOUS_ROTATION" }));
+  });
+
+  it("accepts any angle within one full turn", () => {
+    const spec = makeSpec();
+    spec.objects[0]!.rotation = [0, -2 * Math.PI, 0];
+    spec.objects[1]!.rotation = [0, Math.PI, 0];
+    expect(validateEnvironmentSpec(spec).warnings).toEqual([]);
+  });
+});

@@ -22,7 +22,10 @@ export const EnvironmentTypeSchema = z.enum(["warehouse", "factory", "office", "
 export const TerrainTypeSchema = z.enum(["concrete", "asphalt", "grass", "gravel", "tile", "dirt", "custom"]);
 export const CollisionShapeSchema = z.enum(["box", "cylinder", "mesh"]);
 
-const IdSchema = z.string().regex(/^[A-Za-z0-9_.-]{1,64}$/, "id must be 1-64 chars of [A-Za-z0-9_.-]");
+/** Ids become USD prim names in the compiler, so they must be identifiers: no '-', '.', or leading digit. */
+const IdSchema = z
+  .string()
+  .regex(/^[A-Za-z_][A-Za-z0-9_]{0,63}$/, "id must start with a letter or _ and contain only letters, digits and _ (max 64)");
 
 export const ObjectPhysicsSchema = z
   .object({
@@ -127,6 +130,7 @@ export const VALIDATION_CODES = [
   "INVALID_RESTITUTION",
   "INVALID_MASS",
   "WAYPOINT_IN_OBSTACLE",
+  "SUSPICIOUS_ROTATION",
 ] as const;
 export type ValidationCode = (typeof VALIDATION_CODES)[number];
 
