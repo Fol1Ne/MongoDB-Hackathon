@@ -1,0 +1,222 @@
+{
+  "assets": [
+    {
+      "type": "industrial_shelf",
+      "name": "Industrial Shelf",
+      "footprint": [
+        1.2,
+        0.6
+      ],
+      "height": 2.4,
+      "collision": "box",
+      "tags": [
+        "storage"
+      ],
+      "usdAsset": "assets/shelf_industrial_v2.usd"
+    },
+    {
+      "type": "storage_rack",
+      "name": "Pallet Storage Rack",
+      "footprint": [
+        2.7,
+        1.1
+      ],
+      "height": 4.5,
+      "collision": "box",
+      "tags": [
+        "storage"
+      ],
+      "usdAsset": "assets/storage_rack_v1.usd"
+    },
+    {
+      "type": "pallet",
+      "name": "Pallet",
+      "footprint": [
+        1.2,
+        0.8
+      ],
+      "height": 0.15,
+      "collision": "box",
+      "tags": [
+        "logistics"
+      ],
+      "usdAsset": "assets/pallet_v1.usd"
+    },
+    {
+      "type": "crate",
+      "name": "Crate",
+      "footprint": [
+        0.6,
+        0.4
+      ],
+      "height": 0.4,
+      "collision": "box",
+      "tags": [
+        "logistics",
+        "movable"
+      ],
+      "usdAsset": "assets/crate_v1.usd"
+    },
+    {
+      "type": "box",
+      "name": "Cardboard Box",
+      "footprint": [
+        0.4,
+        0.3
+      ],
+      "height": 0.3,
+      "collision": "box",
+      "tags": [
+        "logistics",
+        "movable"
+      ],
+      "usdAsset": "assets/box_v1.usd"
+    },
+    {
+      "type": "workbench",
+      "name": "Workbench",
+      "footprint": [
+        1.5,
+        0.7
+      ],
+      "height": 0.9,
+      "collision": "box",
+      "tags": [
+        "furniture",
+        "factory"
+      ],
+      "usdAsset": "assets/workbench_v1.usd"
+    },
+    {
+      "type": "table",
+      "name": "Table",
+      "footprint": [
+        1.2,
+        0.8
+      ],
+      "height": 0.75,
+      "collision": "box",
+      "tags": [
+        "furniture",
+        "office"
+      ],
+      "usdAsset": "assets/table_v1.usd"
+    },
+    {
+      "type": "chair",
+      "name": "Chair",
+      "footprint": [
+        0.5,
+        0.5
+      ],
+      "height": 0.9,
+      "collision": "box",
+      "tags": [
+        "furniture",
+        "office"
+      ],
+      "usdAsset": "assets/chair_v1.usd"
+    },
+    {
+      "type": "warehouse_column",
+      "name": "Structural Column",
+      "footprint": [
+        0.5,
+        0.5
+      ],
+      "height": 5,
+      "collision": "cylinder",
+      "tags": [
+        "structure"
+      ],
+      "usdAsset": "assets/column_v1.usd"
+    },
+    {
+      "type": "barrier",
+      "name": "Safety Barrier",
+      "footprint": [
+        2,
+        0.3
+      ],
+      "height": 1,
+      "collision": "box",
+      "tags": [
+        "safety"
+      ],
+      "usdAsset": "assets/barrier_v1.usd"
+    },
+    {
+      "type": "charging_station",
+      "name": "Robot Charging Station",
+      "footprint": [
+        0.8,
+        0.8
+      ],
+      "height": 1.2,
+      "collision": "box",
+      "tags": [
+        "robotics"
+      ],
+      "usdAsset": "assets/charging_station_v1.usd"
+    },
+    {
+      "type": "loading_dock",
+      "name": "Loading Dock",
+      "footprint": [
+        4,
+        3
+      ],
+      "height": 1.2,
+      "collision": "box",
+      "tags": [
+        "logistics",
+        "structure"
+      ],
+      "usdAsset": "assets/loading_dock_v1.usd"
+    },
+    {
+      "type": "forklift",
+      "name": "Forklift",
+      "footprint": [
+        2.5,
+        1.1
+      ],
+      "height": 2.1,
+      "collision": "mesh",
+      "tags": [
+        "vehicle",
+        "movable"
+      ],
+      "usdAsset": "assets/forklift_v1.usd"
+    },
+    {
+      "type": "conveyor",
+      "name": "Conveyor Belt",
+      "footprint": [
+        3,
+        0.8
+      ],
+      "height": 0.9,
+      "collision": "box",
+      "tags": [
+        "factory",
+        "logistics"
+      ],
+      "usdAsset": "assets/conveyor_v1.usd"
+    },
+    {
+      "type": "wall",
+      "name": "Wall Segment",
+      "footprint": [
+        4,
+        0.2
+      ],
+      "height": 3,
+      "collision": "box",
+      "tags": [
+        "structure"
+      ],
+      "usdAsset": "assets/wall_v1.usd"
+    }
+  ]
+}
