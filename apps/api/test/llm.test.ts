@@ -22,3 +22,14 @@ describe("LLM providers without API keys", () => {
     await expect(generateWithRepair("a small warehouse")).rejects.toMatchObject({ code: "PROVIDER_UNAVAILABLE" });
   });
 });
+
+describe("system prompt", () => {
+  it("states the same id rule the validator enforces", async () => {
+    const { buildSystemPrompt } = await import("../src/llm/prompts");
+    const { ID_PATTERN } = await import("@twin/schema");
+    const { ASSET_CATALOGUE } = await import("@twin/catalogue");
+    const prompt = buildSystemPrompt(ASSET_CATALOGUE, []);
+    expect(prompt).toContain(ID_PATTERN.source);
+    expect(prompt).not.toContain("[A-Za-z0-9_.-]{1,64}");
+  });
+});

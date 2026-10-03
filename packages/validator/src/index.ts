@@ -143,6 +143,12 @@ export function validateAndParse(input: unknown, opts: ValidateOptions = {}): Pa
         message: `y extent [${f(b.minY)}, ${f(b.maxY)}] outside environment height [0, ${height}]` });
     }
 
+    // Rotations are radians; anything beyond a full turn is almost always degrees (e.g. 90 instead of π/2).
+    if (o.rotation.some((a) => Math.abs(a) > 2 * Math.PI + EPS)) {
+      warnings.push({ path: `objects[${i}].rotation`, code: "SUSPICIOUS_ROTATION",
+        message: `rotation [${o.rotation.map(f).join(", ")}] exceeds one full turn; values are radians, not degrees` });
+    }
+
     if (o.physics && !o.physics.static && o.physics.mass === null) {
       errors.push({ path: `objects[${i}].physics.mass`, code: "INVALID_MASS", message: "Non-static objects require a positive mass" });
     }

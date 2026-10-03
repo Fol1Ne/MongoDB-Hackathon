@@ -17,7 +17,9 @@ Base URL: `/api/v1` · JSON in/out · no auth yet. Frontend never needs MongoDB 
 | 409 | `ALREADY_AT_VERSION` | revert target is already the head |
 | 503 | `SEARCH_UNAVAILABLE` | vector search isn't available (local DB, index still building, embedding rate limit) |
 
-Validation codes: `SCHEMA_INVALID UNKNOWN_ASSET_TYPE DUPLICATE_OBJECT_ID DUPLICATE_WAYPOINT_ID OUT_OF_BOUNDS OVERLAP INVALID_SCALE INVALID_DIMENSIONS INVALID_FRICTION INVALID_RESTITUTION INVALID_MASS` (+ warning-only `WAYPOINT_IN_OBSTACLE`, and `OVERLAP` when an object is dynamic).
+Validation codes: `SCHEMA_INVALID UNKNOWN_ASSET_TYPE DUPLICATE_OBJECT_ID DUPLICATE_WAYPOINT_ID OUT_OF_BOUNDS OVERLAP INVALID_SCALE INVALID_DIMENSIONS INVALID_FRICTION INVALID_RESTITUTION INVALID_MASS` (+ warning-only `WAYPOINT_IN_OBSTACLE`, `SUSPICIOUS_ROTATION` (an angle beyond ±2π, i.e. probably degrees), and `OVERLAP` when an object is dynamic).
+
+Ids (objects and waypoints) match `^[A-Za-z_][A-Za-z0-9_]{0,63}$`: they become USD prim names, so `-`, `.` and a leading digit are rejected.
 
 Geometry conventions: origin at environment centre on the ground; X ∈ [-width/2, width/2], Z ∈ [-length/2, length/2], Y ∈ [0, height]. `position` = centre of the footprint (y = base). Footprint = catalogue `[X, Z]` × `scale[0]`, `scale[2]` (yaw-expanded AABB). Objects without `physics` count as static. Static–static footprint overlap (with overlapping vertical span, so stacking is allowed) is an **error**.
 
