@@ -19,7 +19,6 @@ export interface StudioState {
   baseVersion: number;
   savedSpec: EnvironmentSpec | null;
   confidence: Confidence | null;
-  origin: "server" | "local" | null;
   photos: StoredPhoto[];
   analysis: Analysis;
   saveStatus: SaveStatus;
@@ -37,8 +36,9 @@ export interface StudioState {
   panel: "none" | "add" | "photos";
   dragging: string | null;
   reviewOnly: boolean;
+  reviewed: readonly string[];
 
-  open(input: { environment: EnvironmentDto; version: VersionDto; versions: VersionMeta[]; confidence: Confidence | null; origin: "server" | "local" | null; photos: StoredPhoto[] }): void;
+  open(input: { environment: EnvironmentDto; version: VersionDto; versions: VersionMeta[]; confidence: Confidence | null; photos: StoredPhoto[] }): void;
   commit<K extends CommandId>(id: K, args: CommandArgs<K>): void;
   setDraftAnalysis(a: Analysis): void;
   select(id: string | null): void;
@@ -54,6 +54,8 @@ export interface StudioState {
   setPanel(p: StudioState["panel"]): void;
   setDragging(id: string | null): void;
   setReviewOnly(on: boolean): void;
+  markReviewed(id: string): void;
+  resolveConflict(choice: "reload" | "override"): Promise<void>;
   addObject(type: string, x: number, z: number): void;
   deleteSelection(): void;
   duplicateSelection(): void;
@@ -72,7 +74,6 @@ export const useStudio = create<StudioState>()(
       baseVersion: 0,
       savedSpec: null,
       confidence: null,
-      origin: null,
       photos: [],
       analysis: EMPTY_ANALYSIS,
       saveStatus: { kind: "idle" },
@@ -89,6 +90,7 @@ export const useStudio = create<StudioState>()(
       panel: "none",
       dragging: null,
       reviewOnly: false,
+      reviewed: [],
 
       open(input) {
         set({
@@ -99,7 +101,6 @@ export const useStudio = create<StudioState>()(
           baseVersion: input.version.version,
           savedSpec: input.version.spec,
           confidence: input.confidence,
-          origin: input.origin,
           photos: input.photos,
           analysis: analyze(input.version.spec),
           saveStatus: { kind: "idle" },
@@ -111,13 +112,19 @@ export const useStudio = create<StudioState>()(
           panel: "none",
           view: "iso",
           reviewOnly: false,
+          reviewed: [],
         });
         useStudio.temporal.getState().clear();
       },
       commit(id, args) {
         const spec = get().spec;
         if (!spec) return;
-        set({ spec: runCommand(spec, id, args), saveStatus: get().saveStatus.kind === "failed" ? { kind: "idle" } : get().saveStatus });
+        const touched = (id === "transform" || id === "setScale") && "id" in args ? String(args.id) : null;
+        set({
+          spec: runCommand(spec, id, args),
+          saveStatus: get().saveStatus.kind === "failed" ? { kind: "idle" } : get().saveStatus,
+          reviewed: touched && !get().reviewed.includes(touched) ? [...get().reviewed, touched] : get().reviewed,
+        });
       },
       setDraftAnalysis: (analysis) => set({ analysis }),
       select: (selection) => {
@@ -140,6 +147,7 @@ export const useStudio = create<StudioState>()(
       setPanel: (panel) => set({ panel }),
       setDragging: (dragging) => set({ dragging }),
       setReviewOnly: (reviewOnly) => set({ reviewOnly }),
+      markReviewed: (id) => (get().reviewed.includes(id) ? undefined : set({ reviewed: [...get().reviewed, id] })),
       addObject(type, x, z) {
         const spec = get().spec;
         if (!spec) return;
@@ -194,12 +202,22 @@ export const useStudio = create<StudioState>()(
         useStudio.temporal.getState().clear();
         return null;
       },
+      async resolveConflict(choice) {
+        if (choice === "reload") return get().reloadHead();
+        const env = get().env;
+        if (!env) return;
+        const versions = await api.listVersions(env.id);
+        if (!versions.ok) return set({ saveStatus: { kind: "failed", error: versions.error } });
+        const head = versions.data.at(-1)?.version ?? get().headVersion;
+        set({ versions: versions.data, headVersion: head, baseVersion: head, saveStatus: { kind: "idle" } });
+        await get().save();
+      },
       async reloadHead() {
         const env = get().env;
         if (!env) return;
         const [head, versions] = await Promise.all([api.getHead(env.id), api.listVersions(env.id)]);
         if (!head.ok || !versions.ok) return;
-        get().open({ environment: head.data.environment, version: head.data.version, versions: versions.data, confidence: get().confidence, origin: get().origin, photos: get().photos });
+        get().open({ environment: head.data.environment, version: head.data.version, versions: versions.data, confidence: get().confidence, photos: get().photos });
       },
     }),
     {
@@ -237,3 +255,5 @@ export function saveView(s: Pick<StudioState, "spec" | "savedSpec" | "analysis" 
   if (s.baseVersion !== s.headVersion) return { kind: "restore", label: `Restore as v${s.headVersion + 1}` };
   return { kind: "clean", label: "Saved" };
 }
+
+if (import.meta.env.DEV) Object.assign(globalThis, { __studio: useStudio });
