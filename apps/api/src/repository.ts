@@ -1,6 +1,7 @@
-import { Int32, ObjectId, type Collection, type Db, type MongoClient } from "mongodb";
+import { Int32, MongoServerError, ObjectId, type Collection, type Db, type MongoClient } from "mongodb";
 import type { EnvironmentSpec } from "@twin/schema";
 import { AppError, conflict, notFound } from "./errors";
+import { buildSimilarPipeline, type SimilarHit, type SimilarQuery } from "./similar";
 
 export interface EnvironmentDoc {
   _id: ObjectId;
@@ -141,6 +142,18 @@ export class EnvironmentRepository {
       this.environments.countDocuments(q),
     ]);
     return { items, total };
+  }
+
+  /** Atlas Vector Search; a 503 where it isn't available (local mongod, index still building, M0 query rate limit). */
+  async similar(q: SimilarQuery): Promise<SimilarHit[]> {
+    try {
+      return await this.versions.aggregate<SimilarHit>(buildSimilarPipeline(q)).toArray();
+    } catch (e) {
+      if (e instanceof MongoServerError) {
+        throw new AppError(503, "SEARCH_UNAVAILABLE", "Vector search is not available right now", [e.message]);
+      }
+      throw e;
+    }
   }
 
   private async runTx<T>(fn: (session: import("mongodb").ClientSession) => Promise<T>): Promise<T> {

@@ -15,6 +15,7 @@ Base URL: `/api/v1` · JSON in/out · no auth yet. Frontend never needs MongoDB 
 | 404 | `NOT_FOUND` | unknown environment/version/route |
 | 409 | `VERSION_CONFLICT` | `baseVersion` is stale, or concurrent write |
 | 409 | `ALREADY_AT_VERSION` | revert target is already the head |
+| 503 | `SEARCH_UNAVAILABLE` | vector search isn't available (local DB, index still building, embedding rate limit) |
 
 Validation codes: `SCHEMA_INVALID UNKNOWN_ASSET_TYPE DUPLICATE_OBJECT_ID DUPLICATE_WAYPOINT_ID OUT_OF_BOUNDS OVERLAP INVALID_SCALE INVALID_DIMENSIONS INVALID_FRICTION INVALID_RESTITUTION INVALID_MASS` (+ warning-only `WAYPOINT_IN_OBSTACLE`, and `OVERLAP` when an object is dynamic).
 
@@ -54,6 +55,16 @@ Query: `order=asc|desc` (default `asc`: v1, v2, …), `limit`, `offset`
 ## POST /environments/:id/revert
 Body: `{ "toVersion": 1, "changeNote"?: string, "baseVersion"?: number }`
 Creates a NEW version (copy of `toVersion`'s spec, `parentVersionId` = current head, `revertedFromVersion` = `toVersion`). History is never deleted. → **201** `{ environment, version, warnings }`
+
+## GET /environments/similar: find similar environments (Atlas Vector Search)
+Query: `text` (3–500 chars) **or** `environmentId`, plus optional `type` and `limit` (1–20, default 5).
+- With `environmentId`, the query is that environment's head summary, and the environment itself is excluded.
+
+→ `{ "items": [ { "environmentId", "versionId", "version", "name", "type", "summaryText", "score" } ] }`, with the best-matching version per environment, highest score first.
+
+Atlas embeds `summaryText` and the query text itself (Automated Embedding), so there are no vectors or embedding keys in the app.
+- **Setup:** run `npm run db:vector` once (see `infra/mongo/README.md`).
+- **When it's unavailable** (local mongod, index still building, rate limit), the endpoint returns **503 `SEARCH_UNAVAILABLE`**. Saves are unaffected.
 
 ## Helpers
 - `POST /environments/validate` body `{ "spec": ... }` → `{ valid, errors[], warnings[] }`. Writes nothing; use for live editor feedback and the LLM repair loop.
